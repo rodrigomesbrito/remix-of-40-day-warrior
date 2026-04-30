@@ -75,14 +75,14 @@
   }
 
   h1, h2, h3, .font-display {
-    font-family: 'Oswald', system-ui, sans-serif;
+    font-family: 'Archivo Black', system-ui, sans-serif;
     letter-spacing: 0.02em;
   }
 }
 
 @layer utilities {
   .text-display {
-    font-family: 'Oswald', system-ui, sans-serif;
+    font-family: 'Archivo Black', system-ui, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
