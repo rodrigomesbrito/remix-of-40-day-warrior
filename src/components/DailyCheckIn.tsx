@@ -67,7 +67,7 @@ export function DailyCheckIn() {
             Modo Mínimo
           </Label>
           <p className="text-xs text-muted-foreground mt-1">
-            Produção 30min · Corpo 10–15min · Mentalidade 10min. Nunca zerar o dia.
+            Produção 30min · Corpo 10–15min · Mentalidade 10min. Sem produção, dia perdido.
           </p>
         </div>
         <Switch

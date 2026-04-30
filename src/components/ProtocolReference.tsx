@@ -82,6 +82,20 @@ export function ProtocolReference() {
         <p className="font-semibold">Regra: nunca zerar o dia.</p>
       </Section>
 
+      <Section title="📊 Como o dia é classificado">
+        <p className="font-semibold text-foreground">
+          Produção é o pilar. Sem produção, o dia é perdido — independente do resto.
+        </p>
+        <ul>
+          <li>🟢 <strong>Forte</strong> → Produção ✔ + Corpo ✔ + Mentalidade ✔</li>
+          <li>🟡 <strong>Mínimo</strong> → Produção ✔ + pelo menos 1 dos outros (ou tudo no modo reduzido)</li>
+          <li>🔴 <strong>Perdido</strong> → Produção ❌ (independente do resto)</li>
+        </ul>
+        <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/80 mt-3">
+          "Posso falhar no resto, mas não posso falhar na produção."
+        </blockquote>
+      </Section>
+
       <Section title="🏁 Recompensa Final">
         <p>Ao final dos 40 dias com consistência mínima de 80%: <strong>celular novo</strong>.</p>
         <p className="text-muted-foreground">Idealmente com dinheiro gerado durante o protocolo.</p>
