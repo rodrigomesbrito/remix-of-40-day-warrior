@@ -1,16 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useProtocol } from "@/hooks/useProtocol";
+import { StartDateSetup } from "@/components/StartDateSetup";
+import { ProtocolHeader } from "@/components/ProtocolHeader";
+import { DailyCheckIn } from "@/components/DailyCheckIn";
+import { Journey } from "@/components/Journey";
+import { ProtocolReference } from "@/components/ProtocolReference";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const { ready, state, start } = useProtocol();
+
+  if (!ready) return null;
+  if (!state) return <StartDateSetup onStart={start} />;
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen">
+      <ProtocolHeader />
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+        <Tabs defaultValue="hoje" className="w-full">
+          <TabsList className="grid w-full grid-cols-3 bg-secondary mb-8">
+            <TabsTrigger value="hoje" className="text-display">Hoje</TabsTrigger>
+            <TabsTrigger value="jornada" className="text-display">Jornada</TabsTrigger>
+            <TabsTrigger value="protocolo" className="text-display">Protocolo</TabsTrigger>
+          </TabsList>
+          <TabsContent value="hoje"><DailyCheckIn /></TabsContent>
+          <TabsContent value="jornada"><Journey /></TabsContent>
+          <TabsContent value="protocolo"><ProtocolReference /></TabsContent>
+        </Tabs>
+      </main>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
