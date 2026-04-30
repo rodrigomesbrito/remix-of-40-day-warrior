@@ -1,0 +1,81 @@
+import { useCallback, useEffect, useState } from "react";
+import {
+  DayRecord,
+  PROTOCOL_LENGTH,
+  ProtocolState,
+  STORAGE_KEY,
+  classifyDay,
+  computeStats,
+  currentDayNumber,
+  emptyDay,
+  todayISO,
+} from "@/lib/protocol";
+
+function loadState(): ProtocolState | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as ProtocolState;
+    if (!parsed.startDate || !parsed.days) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function saveState(s: ProtocolState) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+}
+
+export function useProtocol() {
+  const [state, setState] = useState<ProtocolState | null>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setState(loadState());
+    setReady(true);
+  }, []);
+
+  const start = useCallback((startDate: string) => {
+    const next: ProtocolState = { startDate, days: {} };
+    saveState(next);
+    setState(next);
+  }, []);
+
+  const reset = useCallback(() => {
+    localStorage.removeItem(STORAGE_KEY);
+    setState(null);
+  }, []);
+
+  const updateDay = useCallback((dayNumber: number, patch: Partial<DayRecord>) => {
+    setState((prev) => {
+      if (!prev) return prev;
+      const existing = prev.days[dayNumber] ?? emptyDay();
+      const merged: DayRecord = { ...existing, ...patch };
+      merged.classificacao = classifyDay(merged);
+      merged.savedAt = new Date().toISOString();
+      const next: ProtocolState = {
+        ...prev,
+        days: { ...prev.days, [dayNumber]: merged },
+      };
+      saveState(next);
+      return next;
+    });
+  }, []);
+
+  const dayNumber = state ? currentDayNumber(state.startDate) : 0;
+  const inRange = dayNumber >= 1 && dayNumber <= PROTOCOL_LENGTH;
+  const stats = state ? computeStats(state) : null;
+
+  return {
+    ready,
+    state,
+    start,
+    reset,
+    updateDay,
+    dayNumber,
+    inRange,
+    stats,
+    today: todayISO(),
+  };
+}
