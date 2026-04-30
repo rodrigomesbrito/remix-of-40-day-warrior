@@ -10,11 +10,10 @@ interface Props {
   onClose: () => void;
 }
 
-const FIELDS: { key: "producao" | "corpo" | "mentalidade" | "codigoHonra"; icon: string; label: string }[] = [
+const FIELDS: { key: "producao" | "corpo" | "mentalidade"; icon: string; label: string }[] = [
   { key: "producao", icon: "💰", label: "Produção" },
   { key: "corpo", icon: "🏋️", label: "Corpo" },
   { key: "mentalidade", icon: "🧠", label: "Mentalidade" },
-  { key: "codigoHonra", icon: "⚔️", label: "Código de Honra" },
 ];
 
 export function DayDetailDialog({ dayNumber, onClose }: Props) {

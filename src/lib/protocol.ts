@@ -7,7 +7,12 @@ export interface DayRecord {
   producao: boolean;
   corpo: boolean;
   mentalidade: boolean;
-  codigoHonra: boolean;
+  /** @deprecated mantido por compatibilidade com dados antigos; não impacta o score */
+  codigoHonra?: boolean;
+  /** Itens marcados do código de honra (referência, não pontua) */
+  honra?: string[];
+  /** Itens marcados das leis do guerreiro (referência, não pontua) */
+  leis?: string[];
   modoMinimo: boolean;
   nota?: string;
   classificacao: DayClassification;
@@ -39,7 +44,7 @@ export function currentDayNumber(startDate: string): number {
 }
 
 export function classifyDay(
-  r: Pick<DayRecord, "producao" | "corpo" | "mentalidade" | "codigoHonra" | "modoMinimo">
+  r: Pick<DayRecord, "producao" | "corpo" | "mentalidade" | "modoMinimo">
 ): DayClassification {
   // REGRA DE OURO: Produção é o pilar.
   // Sem produção → 🔴 Perdido, independente do resto.
@@ -97,10 +102,29 @@ export function emptyDay(): DayRecord {
     producao: false,
     corpo: false,
     mentalidade: false,
-    codigoHonra: false,
     modoMinimo: false,
+    honra: [],
+    leis: [],
     nota: "",
     classificacao: "perdido",
     savedAt: new Date().toISOString(),
   };
 }
+
+export const HONRA_ITEMS: string[] = [
+  "Sem redes sociais inúteis",
+  "Sem pornografia",
+  "Sem jogos / apostas",
+  "Sem álcool",
+  "Sem reclamação",
+  "Sem entretenimento excessivo",
+];
+
+export const LEIS_ITEMS: string[] = [
+  "Acordei com intenção (sem celular)",
+  "Banho com intenção",
+  "Alinhamento / reflexão",
+  "Hidratação constante",
+  "Alimentação consciente",
+  "Descanso estratégico",
+];

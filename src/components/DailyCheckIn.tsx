@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useProtocol } from "@/hooks/useProtocol";
-import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
+import { classifyDay, emptyDay, HONRA_ITEMS, LEIS_ITEMS, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { toast } from "sonner";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
@@ -103,13 +103,6 @@ export function DailyCheckIn() {
           checked={day.mentalidade}
           onToggle={() => updateDay(dayNumber, { mentalidade: !day.mentalidade })}
         />
-        <CheckCard
-          icon="⚔️"
-          title="Código de Honra"
-          description="Sem consumo passivo, fofoca, jogos, pornografia, álcool, reclamação."
-          checked={day.codigoHonra}
-          onToggle={() => updateDay(dayNumber, { codigoHonra: !day.codigoHonra })}
-        />
       </div>
 
       <div className="space-y-2">
@@ -133,6 +126,73 @@ export function DailyCheckIn() {
           Confirmar dia
         </Button>
       </div>
+
+      <div className="pt-6 mt-2 border-t border-border space-y-6">
+        <div>
+          <p className="text-display text-[10px] uppercase tracking-widest text-muted-foreground">
+            Bônus · não impacta o score
+          </p>
+          <h3 className="text-display text-lg font-semibold mt-1">⚔️ Código de Honra</h3>
+          <p className="text-xs text-muted-foreground">Proteção, não pontuação. Marque o que respeitou.</p>
+          <ChecklistGroup
+            items={HONRA_ITEMS}
+            selected={day.honra ?? []}
+            onToggle={(item) => {
+              const cur = day.honra ?? [];
+              const next = cur.includes(item) ? cur.filter((i) => i !== item) : [...cur, item];
+              updateDay(dayNumber, { honra: next });
+            }}
+          />
+        </div>
+
+        <div>
+          <h3 className="text-display text-lg font-semibold">🧭 Leis do Guerreiro</h3>
+          <p className="text-xs text-muted-foreground">Qualidade da rotina. Marque o que cumpriu.</p>
+          <ChecklistGroup
+            items={LEIS_ITEMS}
+            selected={day.leis ?? []}
+            onToggle={(item) => {
+              const cur = day.leis ?? [];
+              const next = cur.includes(item) ? cur.filter((i) => i !== item) : [...cur, item];
+              updateDay(dayNumber, { leis: next });
+            }}
+          />
+        </div>
+      </div>
     </div>
+  );
+}
+
+function ChecklistGroup({
+  items,
+  selected,
+  onToggle,
+}: {
+  items: string[];
+  selected: string[];
+  onToggle: (item: string) => void;
+}) {
+  return (
+    <ul className="mt-3 grid sm:grid-cols-2 gap-2">
+      {items.map((item) => {
+        const on = selected.includes(item);
+        return (
+          <li key={item}>
+            <button
+              type="button"
+              onClick={() => onToggle(item)}
+              className={`w-full text-left text-sm rounded-md border px-3 py-2 transition-colors ${
+                on
+                  ? "border-[hsl(var(--success))]/60 bg-[hsl(var(--success))]/10 text-foreground"
+                  : "border-border bg-card/50 text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <span className="mr-2">{on ? "✓" : "○"}</span>
+              {item}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
