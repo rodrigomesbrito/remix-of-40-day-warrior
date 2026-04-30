@@ -91,6 +91,10 @@ export function ProtocolReference() {
           <li>🟡 <strong>Mínimo</strong> → Produção ✔ + pelo menos 1 dos outros (ou tudo no modo reduzido)</li>
           <li>🔴 <strong>Perdido</strong> → Produção ❌ (independente do resto)</li>
         </ul>
+        <p className="text-sm text-muted-foreground mt-3">
+          ⚔️ Código de Honra e 🧭 Leis do Guerreiro são <strong>proteção e qualidade</strong>, não pontuação.
+          Use os checklists na aba <strong>Hoje</strong> como referência — eles não mudam a cor do dia.
+        </p>
         <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/80 mt-3">
           "Posso falhar no resto, mas não posso falhar na produção."
         </blockquote>
