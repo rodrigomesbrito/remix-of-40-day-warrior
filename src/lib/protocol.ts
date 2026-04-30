@@ -41,10 +41,20 @@ export function currentDayNumber(startDate: string): number {
 export function classifyDay(
   r: Pick<DayRecord, "producao" | "corpo" | "mentalidade" | "codigoHonra" | "modoMinimo">
 ): DayClassification {
-  const checks = [r.producao, r.corpo, r.mentalidade, r.codigoHonra].filter(Boolean).length;
-  if (checks === 0) return "perdido";
-  if (r.modoMinimo || checks < 4) return checks >= 2 ? "minimo" : "perdido";
-  return "forte";
+  // REGRA DE OURO: Produção é o pilar.
+  // Sem produção → 🔴 Perdido, independente do resto.
+  if (!r.producao) return "perdido";
+
+  // Com produção feita: o dia está salvo.
+  // 🟢 Forte = produção + corpo + mentalidade (modo normal, sem ser modo mínimo)
+  // 🟡 Mínimo = produção + pelo menos 1 dos outros (corpo OU mentalidade),
+  //              ou em modo mínimo mesmo com tudo feito.
+  const corpoOk = r.corpo;
+  const mentOk = r.mentalidade;
+
+  if (!r.modoMinimo && corpoOk && mentOk) return "forte";
+  if (corpoOk || mentOk) return "minimo";
+  return "minimo"; // produção feita salva o dia como mínimo, mesmo sem corpo/mentalidade
 }
 
 export interface Stats {
