@@ -31,13 +31,13 @@ export function AppSidebar({ active, onChange }: Props) {
       }}
     >
       {/* Logo */}
-      <div className="px-6 pt-7 pb-6 flex flex-col items-center justify-center gap-3">
+      <div className="px-6 pt-6 pb-5 flex flex-col items-center justify-center gap-1.5">
         <img
           src={logoIcon}
           alt="Protocolo 40 Dias"
-          className="w-[72px] h-auto object-contain"
+          className="w-[44px] h-auto object-contain"
         />
-        <p className="text-sidebar-foreground text-[13px] font-extrabold uppercase tracking-[0.22em] text-center leading-[1.25]">
+        <p className="text-sidebar-foreground text-[12px] font-extrabold uppercase tracking-[0.18em] text-center leading-[1.15]">
           Protocolo
           <br />
           40 Dias
