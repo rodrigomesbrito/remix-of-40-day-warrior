@@ -53,7 +53,7 @@ export function Meta() {
   return (
     <div className="space-y-6 max-w-2xl">
       <section className="bg-gradient-blood border border-primary/40 rounded-lg p-6 shadow-deep">
-        <p className="text-display text-xs text-accent tracking-widest mb-2">🎯 META DE PRODUÇÃO</p>
+        <p className="text-[10px] uppercase tracking-widest text-accent font-semibold mb-2">🎯 Meta de Produção</p>
         <h2 className="text-display text-3xl font-bold mb-4">{meta.descricao}</h2>
         <div className="flex items-baseline justify-between mb-2">
           <span className="text-display text-2xl font-bold">{fmtBRL(meta.atual)}</span>
@@ -115,7 +115,7 @@ export function Meta() {
       </blockquote>
 
       <section className="bg-card border border-border rounded-lg p-5 shadow-card">
-        <p className="text-display text-xs text-accent tracking-widest mb-2">🏁 RECOMPENSA FINAL</p>
+        <p className="text-[10px] uppercase tracking-widest text-accent font-semibold mb-2">🏁 Recompensa Final</p>
         <p className="text-display text-2xl font-bold mb-1">📱 Celular novo</p>
         <p className="text-sm text-foreground/80">
           🔓 Liberado com {Math.round(TARGET_CONSISTENCY * 100)}% de consistência ·
@@ -132,7 +132,7 @@ export function Meta() {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-card border border-border rounded-lg p-4 shadow-card">
-      <p className="text-display text-[10px] uppercase tracking-widest text-muted-foreground">{label}</p>
+      <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">{label}</p>
       <p className="text-display text-2xl font-bold">{value}</p>
     </div>
   );

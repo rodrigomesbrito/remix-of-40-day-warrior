@@ -55,18 +55,18 @@ export function DailyCheckIn() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-display text-xs text-muted-foreground">Hoje</p>
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Hoje</p>
           <h2 className="text-display text-3xl font-bold">
             Dia {dayNumber}
             <span className="text-muted-foreground">/{PROTOCOL_LENGTH}</span>
           </h2>
         </div>
-        <span className={`text-display font-semibold ${statusClass}`}>{statusLabel}</span>
+        <span className={`text-sm font-bold uppercase tracking-wider ${statusClass}`}>{statusLabel}</span>
       </div>
 
-      <div className="flex items-center justify-between bg-secondary/50 border border-border rounded-lg p-4">
+      <div className="flex items-center justify-between bg-secondary/40 border border-border rounded-lg p-4">
         <div>
-          <Label htmlFor="modo" className="text-display text-sm">
+          <Label htmlFor="modo" className="text-sm font-semibold uppercase tracking-wider">
             Modo Mínimo
           </Label>
           <p className="text-xs text-muted-foreground mt-1">
