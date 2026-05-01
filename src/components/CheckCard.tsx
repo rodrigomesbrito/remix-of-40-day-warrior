@@ -43,36 +43,51 @@ export function CheckCard({ Icon, iconColor, title, description, checked, onTogg
     <button
       onClick={onToggle}
       className={cn(
-        "group relative w-full text-left rounded-xl border bg-card/60 border-border px-4 py-4 transition-colors overflow-hidden",
-        "hover:bg-card/80",
-        checked && "bg-card/90",
+        "group relative w-full text-left rounded-xl border bg-card/60 border-border px-4 py-4 transition-all overflow-hidden",
+        "hover:bg-card/80 hover:border-border/80 hover:-translate-y-[1px]",
+        checked && "bg-card/90 border-foreground/15",
       )}
     >
-      <span className={cn("absolute left-0 top-0 bottom-0 w-[3px]", styles.bar)} />
+      <span
+        className={cn(
+          "absolute left-0 top-0 bottom-0 w-[3px] transition-opacity",
+          styles.bar,
+          checked ? "opacity-100" : "opacity-70",
+        )}
+      />
       <span
         aria-hidden
-        className={cn("pointer-events-none absolute inset-0", styles.glow)}
+        className={cn(
+          "pointer-events-none absolute inset-0 transition-opacity",
+          styles.glow,
+          checked ? "opacity-100" : "opacity-80",
+        )}
       />
       <div className="relative flex items-center gap-4">
         <div
           className={cn(
-            "shrink-0 h-11 w-11 rounded-full flex items-center justify-center",
+            "shrink-0 h-11 w-11 rounded-full flex items-center justify-center ring-1 ring-inset ring-white/5",
             styles.bg,
           )}
         >
           <Icon className={cn("h-5 w-5", styles.text)} strokeWidth={2.25} />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-[15px] font-extrabold uppercase tracking-wide text-foreground leading-tight">
+          <h3
+            className={cn(
+              "text-[15px] font-extrabold uppercase tracking-wide leading-tight transition-colors",
+              checked ? "text-foreground" : "text-foreground/95",
+            )}
+          >
             {title}
           </h3>
           <p className="text-[13px] text-muted-foreground mt-1 leading-snug">{description}</p>
         </div>
         <div
           className={cn(
-            "shrink-0 h-6 w-6 rounded-md border-2 flex items-center justify-center transition-colors",
+            "shrink-0 h-6 w-6 rounded-md border-2 flex items-center justify-center transition-all",
             checked
-              ? "bg-primary border-primary text-primary-foreground"
+              ? "bg-[hsl(var(--success))] border-[hsl(var(--success))] text-[hsl(var(--success-foreground))] shadow-[0_0_0_4px_hsl(var(--success)/0.18)]"
               : "border-muted-foreground/40 group-hover:border-muted-foreground/70",
           )}
         >
