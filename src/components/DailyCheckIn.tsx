@@ -139,7 +139,7 @@ export function DailyCheckIn() {
         }
         className="w-full h-12 text-display tracking-wider shadow-deep"
       >
-        <CheckCircle2 className="h-5 w-5 mr-2" />
+        <CheckCircle2 className="h-7 w-7 mr-2" strokeWidth={2.5} />
         Confirmar Dia
       </Button>
 

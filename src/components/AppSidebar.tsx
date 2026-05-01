@@ -27,7 +27,7 @@ export function AppSidebar({ active, onChange }: Props) {
       style={{
         backgroundColor: "#0D0E12",
         backgroundImage:
-          "radial-gradient(ellipse 120% 55% at 50% 0%, hsl(0 70% 18% / 0.25) 0%, transparent 65%)",
+          "radial-gradient(ellipse 120% 55% at 50% 0%, hsl(0 70% 18% / 0.08) 0%, transparent 65%)",
       }}
     >
       {/* Logo */}
