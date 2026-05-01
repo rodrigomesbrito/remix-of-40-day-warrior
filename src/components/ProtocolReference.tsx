@@ -100,7 +100,7 @@ export function ProtocolReference() {
         </blockquote>
       </Section>
 
-      <Section title="🏁 Recompensa Final">
+      <Section title="🏁 Missão Final">
         <p>Ao final dos 40 dias com consistência mínima de 80%: <strong>celular novo</strong>.</p>
         <p className="text-muted-foreground">Idealmente com dinheiro gerado durante o protocolo.</p>
       </Section>

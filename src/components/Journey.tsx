@@ -34,6 +34,30 @@ export function Journey() {
         </p>
       </div>
 
+      <div className="bg-gradient-blood border border-primary/40 rounded-lg p-5 shadow-deep">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-display text-lg font-bold tracking-wide">🏁 MISSÃO FINAL</h3>
+          <span
+            className={`text-display text-xs px-2 py-1 rounded ${
+              onTrack
+                ? "bg-[hsl(var(--success))]/20 text-[hsl(var(--success))]"
+                : "bg-accent/20 text-accent"
+            }`}
+          >
+            {onTrack ? "🔓 No caminho" : "🔒 Em progresso"}
+          </span>
+        </div>
+        <p className="text-display text-2xl font-bold mb-1">📱 Celular novo</p>
+        <p className="text-sm text-foreground/80 mb-4">
+          Meta: <strong>{Math.round(TARGET_CONSISTENCY * 100)}%</strong> de consistência ·
+          progresso: <strong>{pct}%</strong>
+        </p>
+        <Progress value={pct} className="h-3" />
+        <p className="text-xs text-foreground/70 mt-3 italic">
+          💰 Preferencialmente pago com o dinheiro gerado durante o protocolo.
+        </p>
+      </div>
+
       <div>
         <h3 className="text-display text-xl font-semibold mb-3">Jornada</h3>
         <JourneyGrid />
