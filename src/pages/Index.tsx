@@ -6,6 +6,7 @@ import { DailyCheckIn } from "@/components/DailyCheckIn";
 import { Journey } from "@/components/Journey";
 import { ProtocolReference } from "@/components/ProtocolReference";
 import { Pendencias } from "@/components/Pendencias";
+import { Meta } from "@/components/Meta";
 
 const Index = () => {
   const { ready, state, start } = useProtocol();
@@ -18,15 +19,17 @@ const Index = () => {
       <ProtocolHeader />
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <Tabs defaultValue="hoje" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-secondary mb-8">
+          <TabsList className="grid w-full grid-cols-5 bg-secondary mb-8">
             <TabsTrigger value="hoje" className="text-display">Hoje</TabsTrigger>
             <TabsTrigger value="jornada" className="text-display">Jornada</TabsTrigger>
             <TabsTrigger value="pendencias" className="text-display">Pendências</TabsTrigger>
+            <TabsTrigger value="meta" className="text-display">Meta</TabsTrigger>
             <TabsTrigger value="protocolo" className="text-display">Protocolo</TabsTrigger>
           </TabsList>
           <TabsContent value="hoje"><DailyCheckIn /></TabsContent>
           <TabsContent value="jornada"><Journey /></TabsContent>
           <TabsContent value="pendencias"><Pendencias /></TabsContent>
+          <TabsContent value="meta"><Meta /></TabsContent>
           <TabsContent value="protocolo"><ProtocolReference /></TabsContent>
         </Tabs>
       </main>
