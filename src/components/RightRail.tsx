@@ -21,38 +21,7 @@ export function RightRail({ onGoJornada }: Props) {
 
   return (
     <aside className="hidden xl:flex flex-col gap-4 w-[320px] shrink-0">
-      {/* Progresso geral */}
-      <Card>
-        <Label>Progresso Geral</Label>
-        <div className="flex items-center gap-4 mt-3">
-          <Donut value={pct} />
-          <div className="text-sm">
-            <p className="text-[hsl(var(--success))] font-semibold">
-              {dayShown} de {PROTOCOL_LENGTH} dias
-            </p>
-            <p className="text-muted-foreground text-xs leading-snug mt-1">
-              Meta: {Math.round(TARGET_CONSISTENCY * 100)}% para liberar<br />sua missão final.
-            </p>
-          </div>
-        </div>
-        <Button variant="outline" size="sm" className="w-full mt-4 justify-between" onClick={onGoJornada}>
-          Ver Jornada <ChevronRight className="h-4 w-4" />
-        </Button>
-      </Card>
-
-      {/* Sequência atual */}
-      <Card>
-        <Label>Sequência Atual</Label>
-        <div className="flex items-center gap-3 mt-3">
-          <Flame className="h-10 w-10 text-primary fill-primary/30" />
-          <span className="text-display text-4xl font-bold">{stats.streak}</span>
-        </div>
-        <p className="text-xs text-muted-foreground mt-3">
-          Melhor sequência: {bestStreak} dia{bestStreak === 1 ? "" : "s"}
-        </p>
-      </Card>
-
-      {/* Recompensa */}
+      {/* Recompensa (motivação) */}
       <Card>
         <Label>Recompensa</Label>
         <div className="flex items-center gap-2 mt-3">
@@ -75,7 +44,38 @@ export function RightRail({ onGoJornada }: Props) {
         </div>
       </Card>
 
-      {/* Lembrete */}
+      {/* Progresso geral (contexto) */}
+      <Card>
+        <Label>Progresso Geral</Label>
+        <div className="flex items-center gap-4 mt-3">
+          <Donut value={pct} />
+          <div className="text-sm">
+            <p className="text-[hsl(var(--success))] font-semibold">
+              {dayShown} de {PROTOCOL_LENGTH} dias
+            </p>
+            <p className="text-muted-foreground text-xs leading-snug mt-1">
+              Meta: {Math.round(TARGET_CONSISTENCY * 100)}% para liberar<br />sua missão final.
+            </p>
+          </div>
+        </div>
+        <Button variant="outline" size="sm" className="w-full mt-4 justify-between" onClick={onGoJornada}>
+          Ver Jornada <ChevronRight className="h-4 w-4" />
+        </Button>
+      </Card>
+
+      {/* Sequência atual (engajamento) */}
+      <Card>
+        <Label>Sequência Atual</Label>
+        <div className="flex items-center gap-3 mt-3">
+          <Flame className="h-10 w-10 text-primary fill-primary/30" />
+          <span className="text-display text-4xl font-bold">{stats.streak}</span>
+        </div>
+        <p className="text-xs text-muted-foreground mt-3">
+          Melhor sequência: {bestStreak} dia{bestStreak === 1 ? "" : "s"}
+        </p>
+      </Card>
+
+      {/* Lembrete (apoio) */}
       <Card>
         <div className="flex items-center justify-between">
           <Label>Lembrete</Label>
