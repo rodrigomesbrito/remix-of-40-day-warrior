@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { CheckCircle2, Lightbulb, Target, Info, DollarSign, Dumbbell, Brain } from "lucide-react";
 
