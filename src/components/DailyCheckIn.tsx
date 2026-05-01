@@ -56,26 +56,55 @@ export function DailyCheckIn() {
     weekday: "long", day: "2-digit", month: "long",
   });
 
+  const pillars = [day.producao, day.corpo, day.mentalidade];
+  const pillarsDone = pillars.filter(Boolean).length;
+  const dayProgress = Math.round((dayNumber / PROTOCOL_LENGTH) * 100);
+
   return (
-    <div className="bg-card/40 border border-border rounded-xl p-6 sm:p-8 space-y-6 shadow-card">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-primary text-xs font-bold uppercase tracking-widest mb-1">Hoje</p>
-          <h2 className="text-display text-4xl font-bold leading-none">
-            Dia {dayNumber}
-            <span className="text-muted-foreground">/{PROTOCOL_LENGTH}</span>
-          </h2>
-          <p className="text-sm text-muted-foreground mt-2 capitalize">{todayDate}</p>
+    <div className="relative bg-card/40 border border-border rounded-2xl p-6 sm:p-8 space-y-6 shadow-card overflow-hidden">
+      {/* Ambient glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{
+          backgroundImage:
+            "radial-gradient(ellipse 70% 40% at 0% 0%, hsl(0 75% 35% / 0.18), transparent 70%)",
+        }}
+      />
+
+      <div className="relative flex items-start justify-between gap-4">
+        <div className="flex items-center gap-5">
+          <PillarRing done={pillarsDone} total={3} />
+          <div>
+            <p className="text-primary text-xs font-bold uppercase tracking-widest mb-1">Hoje</p>
+            <h2 className="text-display text-4xl font-bold leading-none">
+              Dia {dayNumber}
+              <span className="text-muted-foreground">/{PROTOCOL_LENGTH}</span>
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2 capitalize">{todayDate}</p>
+          </div>
         </div>
-        <span className={`text-sm font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${statusClass}`}>
-          <Target className="h-4 w-4" />
+        <span className={`text-[11px] font-bold uppercase tracking-widest inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-card/80 ${statusClass}`}>
+          <Target className="h-3.5 w-3.5" />
           {statusLabel}
         </span>
       </div>
 
-      <div className="border-t border-border" />
+      {/* Progress bar do protocolo */}
+      <div className="relative">
+        <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-muted-foreground font-bold mb-1.5">
+          <span>Progresso do Protocolo</span>
+          <span className="text-foreground/80">{dayProgress}%</span>
+        </div>
+        <div className="h-1.5 w-full rounded-full bg-secondary overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-primary to-[hsl(var(--accent))] transition-all"
+            style={{ width: `${dayProgress}%` }}
+          />
+        </div>
+      </div>
 
-      <div className="flex items-center justify-between gap-4 bg-card/60 border border-border rounded-xl px-4 py-3">
+      <div className="relative flex items-center justify-between gap-4 bg-card/60 border border-border rounded-xl px-4 py-3">
         <div className="min-w-0">
           <div className="flex items-center gap-1.5">
             <Label htmlFor="modo" className="text-[13px] font-extrabold uppercase tracking-wider">
@@ -94,7 +123,7 @@ export function DailyCheckIn() {
         />
       </div>
 
-      <div>
+      <div className="relative">
         <p className="text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">
           Pilares do Dia
         </p>
@@ -137,16 +166,45 @@ export function DailyCheckIn() {
             description: isPristine ? "🔴 Dia perdido — sem produção." : meta.label,
           })
         }
-        className="w-full h-12 text-display tracking-wider shadow-deep"
+        className="relative w-full h-14 text-display tracking-widest shadow-deep bg-gradient-to-r from-primary to-[hsl(var(--primary-glow))] hover:opacity-95"
       >
         <CheckCircle2 className="!h-9 !w-9 mr-2" strokeWidth={2.5} />
         Confirmar Dia
       </Button>
 
-      <p className="text-center text-xs text-muted-foreground inline-flex items-center justify-center gap-1.5 w-full">
+      <p className="relative text-center text-xs text-muted-foreground inline-flex items-center justify-center gap-1.5 w-full">
         <Lightbulb className="h-3.5 w-3.5 text-accent" />
         <span><strong>Dica:</strong> Foque no mínimo com excelência todos os dias.</span>
       </p>
+    </div>
+  );
+}
+
+function PillarRing({ done, total }: { done: number; total: number }) {
+  const r = 26;
+  const c = 2 * Math.PI * r;
+  const pct = done / total;
+  const offset = c - pct * c;
+  const color =
+    done === total ? "hsl(var(--success))" : done === 0 ? "hsl(var(--muted-foreground))" : "hsl(var(--primary-glow))";
+  return (
+    <div className="relative h-[68px] w-[68px] shrink-0">
+      <svg viewBox="0 0 68 68" className="-rotate-90 h-full w-full">
+        <circle cx="34" cy="34" r={r} stroke="hsl(var(--secondary))" strokeWidth="5" fill="none" />
+        <circle
+          cx="34" cy="34" r={r}
+          stroke={color}
+          strokeWidth="5" fill="none"
+          strokeDasharray={c}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          style={{ transition: "stroke-dashoffset 400ms ease, stroke 200ms" }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
+        <span className="text-display text-base font-bold">{done}<span className="text-muted-foreground text-xs">/{total}</span></span>
+        <span className="text-[8px] uppercase tracking-widest text-muted-foreground font-bold mt-0.5">Pilares</span>
+      </div>
     </div>
   );
 }
