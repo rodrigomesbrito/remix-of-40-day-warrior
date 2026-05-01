@@ -25,21 +25,21 @@ export function AppSidebar({ active, onChange }: Props) {
 
   return (
     <aside
-      className="hidden lg:flex flex-col w-[220px] shrink-0 bg-sidebar border-r border-sidebar-border min-h-screen sticky top-0"
+      className="hidden lg:flex flex-col w-[230px] shrink-0 border-r border-sidebar-border h-screen sticky top-0 overflow-hidden"
       style={{
-        backgroundImage:
-          "radial-gradient(ellipse at top, hsl(0 75% 14% / 0.55), transparent 55%)",
+        background:
+          "radial-gradient(ellipse 120% 60% at 50% 0%, hsl(0 70% 18% / 0.85) 0%, hsl(0 0% 4%) 60%, hsl(0 0% 3%) 100%)",
       }}
     >
       {/* Logo */}
-      <div className="px-5 pt-6 pb-5 flex flex-col items-center text-center gap-2.5">
+      <div className="px-5 pt-6 pb-5 flex items-center justify-center gap-3">
         <img
           src={shield}
           alt="Protocolo 40 Dias"
-          className="h-[52px] w-auto object-contain"
-          style={{ filter: "drop-shadow(0 0 10px hsl(0 85% 50% / 0.55))" }}
+          className="h-[46px] w-auto object-contain shrink-0"
+          style={{ filter: "drop-shadow(0 0 10px hsl(0 85% 50% / 0.6))" }}
         />
-        <p className="text-display text-[12px] font-bold leading-[1.2] tracking-[0.22em] text-sidebar-foreground">
+        <p className="text-display text-[13px] font-bold leading-[1.15] tracking-[0.18em] text-sidebar-foreground text-left">
           PROTOCOLO
           <br />
           40 DIAS
@@ -49,8 +49,8 @@ export function AppSidebar({ active, onChange }: Props) {
       <div className="h-px bg-sidebar-border mx-4" />
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4">
-        <ul className="space-y-0.5">
+      <nav className="flex-1 px-3 py-4 min-h-0">
+        <ul className="space-y-1.5">
           {NAV_ITEMS.map((it, idx) => {
             const Icon = it.icon;
             const isActive = active === it.id;
@@ -60,7 +60,7 @@ export function AppSidebar({ active, onChange }: Props) {
                 <button
                   onClick={() => onChange(it.id)}
                   className={cn(
-                    "relative w-full flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-md text-[13px] font-medium transition-colors",
+                    "relative w-full flex items-center gap-3 pl-4 pr-3 py-3 rounded-md text-[13px] font-medium transition-colors",
                     isActive
                       ? "bg-[hsl(0_60%_18%/0.45)] text-sidebar-foreground"
                       : "text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
@@ -83,35 +83,33 @@ export function AppSidebar({ active, onChange }: Props) {
                     </span>
                   )}
                 </button>
-                {idx === 4 && <div className="h-px bg-sidebar-border my-2.5 mx-2" />}
+                {idx === 4 && <div className="h-px bg-sidebar-border my-3 mx-2" />}
               </li>
             );
           })}
         </ul>
       </nav>
 
-      {/* Quote */}
-      <div className="px-5 pt-5 pb-5 border-t border-sidebar-border">
-        <p className="text-primary text-[28px] leading-none mb-1.5 font-display">“</p>
-        <p className="text-[13px] font-semibold leading-snug text-sidebar-foreground">
-          Disciplina hoje,
-          <br />
-          resultado amanhã.
-        </p>
-        <p className="text-[11px] text-muted-foreground mt-1.5">
-          – Foque no processo.
-        </p>
-      </div>
-
-      {/* Mountain */}
-      <div className="relative h-[150px] overflow-hidden">
+      {/* Mountain w/ overlaid quote */}
+      <div className="relative h-[180px] shrink-0 overflow-hidden border-t border-sidebar-border">
         <img
           src={mountain}
           alt=""
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
+        <div className="relative z-10 h-full flex flex-col justify-end px-5 pb-4">
+          <p className="text-primary text-[28px] leading-none mb-1 font-display">“</p>
+          <p className="text-[13px] font-semibold leading-snug text-sidebar-foreground">
+            Disciplina hoje,
+            <br />
+            resultado amanhã.
+          </p>
+          <p className="text-[11px] text-sidebar-foreground/70 mt-1">
+            – Foque no processo.
+          </p>
+        </div>
       </div>
     </aside>
   );
