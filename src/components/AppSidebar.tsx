@@ -1,6 +1,6 @@
 import { Home, Flag, ClipboardList, Target, BookOpen, BarChart3, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
-import shield from "@/assets/shield.png";
+import logoFull from "@/assets/logo-full.png";
 import mountain from "@/assets/mountain.jpg";
 import { usePendencias } from "@/hooks/usePendencias";
 
@@ -27,23 +27,19 @@ export function AppSidebar({ active, onChange }: Props) {
     <aside
       className="hidden lg:flex flex-col w-[230px] shrink-0 border-r border-sidebar-border h-screen sticky top-0 overflow-hidden"
       style={{
-        background:
-          "radial-gradient(ellipse 120% 60% at 50% 0%, hsl(0 70% 18% / 0.85) 0%, hsl(0 0% 4%) 60%, hsl(0 0% 3%) 100%)",
+        backgroundColor: "#110F11",
+        backgroundImage:
+          "radial-gradient(ellipse 120% 55% at 50% 0%, hsl(0 70% 18% / 0.35) 0%, transparent 65%)",
       }}
     >
       {/* Logo */}
-      <div className="px-5 pt-6 pb-5 flex items-center justify-center gap-3">
+      <div className="px-4 pt-5 pb-4 flex items-center justify-center">
         <img
-          src={shield}
+          src={logoFull}
           alt="Protocolo 40 Dias"
-          className="h-[46px] w-auto object-contain shrink-0"
-          style={{ filter: "drop-shadow(0 0 10px hsl(0 85% 50% / 0.6))" }}
+          className="w-full h-auto object-contain"
+          style={{ filter: "drop-shadow(0 0 12px hsl(0 85% 50% / 0.45))" }}
         />
-        <p className="text-display text-[13px] font-bold leading-[1.15] tracking-[0.18em] text-sidebar-foreground text-left">
-          PROTOCOLO
-          <br />
-          40 DIAS
-        </p>
       </div>
 
       <div className="h-px bg-sidebar-border mx-4" />
@@ -90,23 +86,23 @@ export function AppSidebar({ active, onChange }: Props) {
         </ul>
       </nav>
 
-      {/* Mountain w/ overlaid quote */}
-      <div className="relative h-[180px] shrink-0 overflow-hidden border-t border-sidebar-border">
+      {/* Mountain w/ overlaid quote (top) */}
+      <div className="relative h-[260px] shrink-0 overflow-hidden border-t border-sidebar-border">
         <img
           src={mountain}
           alt=""
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
-        <div className="relative z-10 h-full flex flex-col justify-end px-5 pb-4">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />
+        <div className="relative z-10 flex flex-col px-5 pt-4">
           <p className="text-primary text-[28px] leading-none mb-1 font-display">“</p>
           <p className="text-[13px] font-semibold leading-snug text-sidebar-foreground">
             Disciplina hoje,
             <br />
             resultado amanhã.
           </p>
-          <p className="text-[11px] text-sidebar-foreground/70 mt-1">
+          <p className="text-[11px] text-sidebar-foreground/80 mt-1">
             – Foque no processo.
           </p>
         </div>
