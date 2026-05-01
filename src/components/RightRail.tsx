@@ -1,23 +1,38 @@
-import { Bell, ChevronRight, Flame } from "lucide-react";
+import { ChevronRight, Flame, Trophy, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProtocol } from "@/hooks/useProtocol";
 import { PROTOCOL_LENGTH, TARGET_CONSISTENCY, classifyDay, emptyDay } from "@/lib/protocol";
+import { useMeta } from "@/hooks/useMeta";
+import { usePendencias } from "@/hooks/usePendencias";
+import { Progress } from "@/components/ui/progress";
 
 interface Props {
   onGoJornada: () => void;
+  onGoMeta: () => void;
+  onGoPendencias: () => void;
 }
 
-export function RightRail({ onGoJornada }: Props) {
+export function RightRail({ onGoJornada, onGoMeta, onGoPendencias }: Props) {
   const { state, stats, dayNumber } = useProtocol();
+  const { meta } = useMeta();
+  const { items: pend } = usePendencias();
   if (!state || !stats) return null;
 
   const dayShown = Math.min(PROTOCOL_LENGTH, Math.max(1, dayNumber));
   const pct = Math.round((dayShown / PROTOCOL_LENGTH) * 100);
   const today = state.days[dayNumber] ?? emptyDay();
   const cls = classifyDay(today);
-  const todoPilares = !today.producao || !today.corpo || !today.mentalidade;
-  const dayConfirmed = !!state.days[dayNumber];
   const bestStreak = computeBestStreak(state);
+  const consistPct = Math.round(stats.consistencia * 100);
+  const onTrack = stats.consistencia >= TARGET_CONSISTENCY;
+  const metaPct = Math.min(100, Math.round((meta.atual / Math.max(1, meta.alvo)) * 100));
+  const abertas = pend.filter((p) => !p.feita);
+  const topAbertas = [...abertas]
+    .sort((a, b) => {
+      const order: Record<string, number> = { alta: 0, media: 1, baixa: 2 };
+      return order[a.prioridade] - order[b.prioridade];
+    })
+    .slice(0, 3);
 
   return (
     <aside className="hidden xl:flex flex-col gap-4 w-[320px] shrink-0">
@@ -52,26 +67,73 @@ export function RightRail({ onGoJornada }: Props) {
         </p>
       </Card>
 
-      {/* Próximos passos */}
-      <Card>
-        <Label>Próximos Passos</Label>
-        <ul className="mt-3 space-y-2 text-sm">
-          <Step done={!todoPilares} text="Complete os 3 pilares de hoje" />
-          <Step done={dayConfirmed} text="Confirme seu dia" />
-          <Step done={stats.streak >= 2} text="Mantenha sua sequência" />
-        </ul>
-      </Card>
-
-      {/* Lembrete */}
+      {/* Missão Final (recompensa) */}
       <Card>
         <div className="flex items-center justify-between">
-          <Label>Lembrete</Label>
-          <Bell className="h-4 w-4 text-primary" />
+          <Label>Missão Final</Label>
+          <Trophy className="h-4 w-4 text-accent" />
         </div>
-        <p className="text-sm mt-3 leading-snug text-foreground/85">
-          O que você faz todos os dias, define quem você se torna.
+        <p className="text-display text-xl font-bold mt-3 leading-tight">📱 Celular novo</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          Liberado com {Math.round(TARGET_CONSISTENCY * 100)}% de consistência
         </p>
-        <p className="text-sm text-primary font-bold mt-2">Não quebre a corrente.</p>
+        <div className="mt-3">
+          <div className="flex items-center justify-between text-xs mb-1">
+            <span className="text-muted-foreground">Consistência</span>
+            <span className={onTrack ? "text-[hsl(var(--success))] font-bold" : "text-accent font-bold"}>
+              {consistPct}%
+            </span>
+          </div>
+          <Progress value={consistPct} className="h-2" />
+        </div>
+        <div className="mt-3">
+          <div className="flex items-center justify-between text-xs mb-1">
+            <span className="text-muted-foreground">Meta de produção</span>
+            <span className="text-foreground/90 font-bold">{metaPct}%</span>
+          </div>
+          <Progress value={metaPct} className="h-2" />
+        </div>
+        <Button variant="outline" size="sm" className="w-full mt-4 justify-between" onClick={onGoMeta}>
+          Ver Meta <ChevronRight className="h-4 w-4" />
+        </Button>
+      </Card>
+
+      {/* Pendências (resumo leve) */}
+      <Card>
+        <div className="flex items-center justify-between">
+          <Label>Pendências</Label>
+          <ClipboardList className="h-4 w-4 text-primary" />
+        </div>
+        {abertas.length === 0 ? (
+          <p className="text-sm mt-3 text-muted-foreground">Nenhuma pendência aberta. ⚔️</p>
+        ) : (
+          <>
+            <p className="text-display text-3xl font-bold mt-2 text-primary leading-none">
+              {abertas.length}
+              <span className="text-sm text-muted-foreground font-normal ml-2">aberta{abertas.length === 1 ? "" : "s"}</span>
+            </p>
+            <ul className="mt-3 space-y-1.5">
+              {topAbertas.map((p) => (
+                <li key={p.id} className="flex items-center gap-2 text-xs text-foreground/85">
+                  <span
+                    className={
+                      "inline-block h-1.5 w-1.5 rounded-full shrink-0 " +
+                      (p.prioridade === "alta"
+                        ? "bg-primary"
+                        : p.prioridade === "media"
+                        ? "bg-accent"
+                        : "bg-muted-foreground")
+                    }
+                  />
+                  <span className="truncate">{p.titulo}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        <Button variant="outline" size="sm" className="w-full mt-4 justify-between" onClick={onGoPendencias}>
+          Ver Pendências <ChevronRight className="h-4 w-4" />
+        </Button>
       </Card>
 
       {cls && null}
@@ -87,20 +149,6 @@ function Card({ children }: { children: React.ReactNode }) {
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{children}</p>
-  );
-}
-
-function Step({ done, text }: { done: boolean; text: string }) {
-  return (
-    <li className="flex items-center gap-2">
-      <span
-        className={
-          "inline-block h-3.5 w-3.5 rounded-full border-2 " +
-          (done ? "border-[hsl(var(--success))] bg-[hsl(var(--success))]/20" : "border-primary/70")
-        }
-      />
-      <span className={done ? "text-muted-foreground line-through" : "text-foreground/90"}>{text}</span>
-    </li>
   );
 }
 
