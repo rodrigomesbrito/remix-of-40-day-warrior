@@ -1,4 +1,4 @@
-import { Home, Flag, ClipboardList, Target, BookOpen, BarChart3, Settings } from "lucide-react";
+import { Home, Flag, ClipboardList, Target, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoFull from "@/assets/logo-full.png";
 import mountain from "@/assets/mountain.jpg";
@@ -15,8 +15,6 @@ const NAV_ITEMS = [
   { id: "pendencias", label: "Pendências", icon: ClipboardList },
   { id: "meta", label: "Meta", icon: Target },
   { id: "protocolo", label: "Protocolo", icon: BookOpen },
-  { id: "estatisticas", label: "Estatísticas", icon: BarChart3 },
-  { id: "configuracoes", label: "Configurações", icon: Settings },
 ];
 
 export function AppSidebar({ active, onChange }: Props) {
@@ -57,7 +55,7 @@ export function AppSidebar({ active, onChange }: Props) {
                   className={cn(
                     "relative w-full flex items-center gap-3 pl-3 pr-3 py-4 rounded-md text-[13px] font-medium transition-colors",
                     isActive
-                      ? "bg-[hsl(0_60%_18%/0.45)] text-sidebar-foreground"
+                      ? "bg-[hsl(0_60%_22%/0.75)] text-sidebar-foreground"
                       : "text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
                   )}
                 >
@@ -86,14 +84,14 @@ export function AppSidebar({ active, onChange }: Props) {
       </nav>
 
       {/* Mountain w/ overlaid quote (top) */}
-      <div className="relative h-[360px] shrink-0 overflow-hidden border-t border-sidebar-border">
+      <div className="relative h-[360px] shrink-0 overflow-hidden">
         <img
           src={mountain}
           alt=""
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E12] via-[#0D0E12]/70 to-transparent" />
         <div className="relative z-10 flex flex-col px-5 pt-4">
           <p className="text-primary text-[28px] leading-none mb-1 font-display">“</p>
           <p className="text-[13px] font-semibold leading-snug text-sidebar-foreground">
