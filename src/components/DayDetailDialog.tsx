@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useProtocol } from "@/hooks/useProtocol";
-import { emptyDay } from "@/lib/protocol";
+import { classifyDay, emptyDay } from "@/lib/protocol";
 
 interface Props {
   dayNumber: number | null;
@@ -16,17 +16,27 @@ const FIELDS: { key: "producao" | "corpo" | "mentalidade"; icon: string; label: 
   { key: "mentalidade", icon: "🧠", label: "Mentalidade" },
 ];
 
+const STATUS: Record<string, { label: string; className: string }> = {
+  forte: { label: "🟢 Dia Forte", className: "text-[hsl(var(--success))]" },
+  minimo: { label: "🟡 Dia Mínimo", className: "text-accent" },
+  perdido: { label: "🔴 Dia Perdido", className: "text-destructive-foreground" },
+};
+
 export function DayDetailDialog({ dayNumber, onClose }: Props) {
   const { state, updateDay } = useProtocol();
   if (!state || dayNumber === null) return null;
 
   const day = state.days[dayNumber] ?? emptyDay();
+  const status = STATUS[classifyDay(day)];
 
   return (
     <Dialog open={dayNumber !== null} onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="bg-card">
         <DialogHeader>
-          <DialogTitle className="text-display text-2xl">Dia {dayNumber}</DialogTitle>
+          <DialogTitle className="text-display text-2xl flex items-center justify-between gap-3">
+            <span>Dia {dayNumber}</span>
+            <span className={`text-base font-semibold ${status.className}`}>{status.label}</span>
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -52,10 +62,11 @@ export function DayDetailDialog({ dayNumber, onClose }: Props) {
           ))}
 
           <div className="space-y-2">
-            <Label className="text-display text-xs">Nota</Label>
+            <Label className="text-display text-xs">Nota do dia (opcional)</Label>
             <Textarea
               value={day.nota ?? ""}
               onChange={(e) => updateDay(dayNumber, { nota: e.target.value })}
+              placeholder="O que você fez, aprendeu ou precisa lembrar..."
               className="bg-background min-h-20"
             />
           </div>
