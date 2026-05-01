@@ -32,14 +32,14 @@ export function AppSidebar({ active, onChange }: Props) {
       }}
     >
       {/* Logo */}
-      <div className="px-5 pt-7 pb-6 flex flex-col items-center text-center gap-3">
+      <div className="px-5 pt-6 pb-5 flex flex-col items-center text-center gap-2.5">
         <img
           src={shield}
           alt="Protocolo 40 Dias"
-          className="h-[96px] w-auto object-contain"
-          style={{ filter: "drop-shadow(0 0 14px hsl(0 85% 50% / 0.5))" }}
+          className="h-[52px] w-auto object-contain"
+          style={{ filter: "drop-shadow(0 0 10px hsl(0 85% 50% / 0.55))" }}
         />
-        <p className="text-display text-[14px] font-bold leading-[1.15] tracking-[0.18em] text-sidebar-foreground">
+        <p className="text-display text-[12px] font-bold leading-[1.2] tracking-[0.22em] text-sidebar-foreground">
           PROTOCOLO
           <br />
           40 DIAS
@@ -50,7 +50,7 @@ export function AppSidebar({ active, onChange }: Props) {
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4">
-        <ul className="space-y-0">
+        <ul className="space-y-0.5">
           {NAV_ITEMS.map((it, idx) => {
             const Icon = it.icon;
             const isActive = active === it.id;
@@ -60,29 +60,30 @@ export function AppSidebar({ active, onChange }: Props) {
                 <button
                   onClick={() => onChange(it.id)}
                   className={cn(
-                    "relative w-full flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-md text-[13px] font-semibold transition-colors",
+                    "relative w-full flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-md text-[13px] font-medium transition-colors",
                     isActive
-                      ? "bg-sidebar-accent text-sidebar-foreground"
+                      ? "bg-[hsl(0_60%_18%/0.45)] text-sidebar-foreground"
                       : "text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
                   )}
                 >
                   {isActive && (
-                    <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r bg-primary" />
+                    <span className="absolute left-0 top-1 bottom-1 w-[3px] rounded-r bg-primary" />
                   )}
                   <Icon
+                    strokeWidth={1.75}
                     className={cn(
-                      "h-[17px] w-[17px] shrink-0",
-                      isActive ? "text-primary" : "text-sidebar-foreground/60",
+                      "h-[18px] w-[18px] shrink-0",
+                      isActive ? "text-primary" : "text-sidebar-foreground/70",
                     )}
                   />
                   <span className="flex-1 text-left">{it.label}</span>
                   {showBadge && (
-                    <span className="bg-primary text-primary-foreground text-[10px] font-bold rounded-full min-w-[20px] h-[20px] inline-flex items-center justify-center px-1.5">
+                    <span className="bg-primary text-primary-foreground text-[10px] font-bold rounded-full min-w-[18px] h-[18px] inline-flex items-center justify-center px-1.5">
                       {abertasCount}
                     </span>
                   )}
                 </button>
-                {(idx === 4) && <div className="h-px bg-sidebar-border my-2 mx-1" />}
+                {idx === 4 && <div className="h-px bg-sidebar-border my-2.5 mx-2" />}
               </li>
             );
           })}
@@ -90,14 +91,14 @@ export function AppSidebar({ active, onChange }: Props) {
       </nav>
 
       {/* Quote */}
-      <div className="px-5 pt-4 pb-5 border-t border-sidebar-border">
-        <p className="text-primary text-3xl leading-none mb-1 font-display">“</p>
+      <div className="px-5 pt-5 pb-5 border-t border-sidebar-border">
+        <p className="text-primary text-[28px] leading-none mb-1.5 font-display">“</p>
         <p className="text-[13px] font-semibold leading-snug text-sidebar-foreground">
           Disciplina hoje,
           <br />
           resultado amanhã.
         </p>
-        <p className="text-[11px] text-muted-foreground italic mt-1.5">
+        <p className="text-[11px] text-muted-foreground mt-1.5">
           – Foque no processo.
         </p>
       </div>
