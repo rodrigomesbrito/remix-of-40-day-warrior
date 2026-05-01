@@ -55,7 +55,7 @@ export function CheckCard({ Icon, iconColor, title, description, checked, onTogg
         "hover:bg-card/80 hover:border-border/80 active:scale-[0.99]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         styles.ring,
-        checked && "bg-card/90",
+        checked && "bg-card/40 opacity-75",
       )}
     >
       <span className={cn("absolute left-0 top-0 bottom-0 w-[3px]", styles.bar)} />
