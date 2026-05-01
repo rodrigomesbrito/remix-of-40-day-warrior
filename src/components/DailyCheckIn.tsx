@@ -4,10 +4,10 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useProtocol } from "@/hooks/useProtocol";
-import { classifyDay, emptyDay, PROTOCOL_LENGTH, TARGET_CONSISTENCY } from "@/lib/protocol";
+import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { CheckCircle2, Lightbulb, DollarSign, Dumbbell, Brain, Flag, Lock, Unlock } from "lucide-react";
+import { CheckCircle2, Lightbulb, DollarSign, Dumbbell, Brain } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
   forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]" },
@@ -27,7 +27,7 @@ const CLASS_BADGE: Record<string, string> = {
 };
 
 export function DailyCheckIn() {
-  const { state, stats, dayNumber, inRange, updateDay, reset } = useProtocol();
+  const { state, dayNumber, inRange, updateDay, reset } = useProtocol();
 
   const day = useMemo(() => {
     if (!state || !inRange) return null;
@@ -67,30 +67,9 @@ export function DailyCheckIn() {
   const todayDate = new Date().toLocaleDateString("pt-BR", {
     weekday: "long", day: "2-digit", month: "long",
   });
-  const consistPct = stats ? Math.round(stats.consistencia * 100) : 0;
-  const onTrack = stats ? stats.consistencia >= TARGET_CONSISTENCY : false;
 
   return (
-    <div className="space-y-4 max-w-3xl mx-auto">
-      <div className="flex items-center justify-between gap-3 text-[12px] px-1">
-        <span className="inline-flex items-center gap-1.5 uppercase tracking-wider font-bold text-muted-foreground">
-          <Flag className="h-3.5 w-3.5 text-primary" />
-          Missão final:
-          <span className="text-foreground/90 normal-case tracking-normal font-semibold">Celular novo</span>
-        </span>
-        <span className="inline-flex items-center gap-1.5 uppercase tracking-wider font-bold">
-          {onTrack ? (
-            <Unlock className="h-3.5 w-3.5 text-[hsl(var(--success))]" />
-          ) : (
-            <Lock className="h-3.5 w-3.5 text-muted-foreground/70" />
-          )}
-          <span className={cn(onTrack ? "text-[hsl(var(--success))]" : "text-foreground/80")}>
-            {consistPct}% concluído
-          </span>
-        </span>
-      </div>
-
-      <div className="bg-card/40 border border-border rounded-xl p-6 sm:p-8 space-y-6 shadow-card">
+    <div className="bg-card/40 border border-border rounded-xl p-6 sm:p-8 space-y-6 shadow-card">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-primary text-xs font-bold uppercase tracking-widest mb-1">Hoje</p>
@@ -197,7 +176,6 @@ export function DailyCheckIn() {
         <Lightbulb className="h-3.5 w-3.5 text-accent" />
         <span><strong>Dica:</strong> Foque no mínimo com excelência todos os dias.</span>
       </p>
-      </div>
     </div>
   );
 }
