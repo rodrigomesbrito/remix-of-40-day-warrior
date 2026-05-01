@@ -58,7 +58,7 @@ export function DailyCheckIn() {
 
   const pillars = [day.producao, day.corpo, day.mentalidade];
   const pillarsDone = pillars.filter(Boolean).length;
-  const dayProgress = Math.round((dayNumber / PL) * 100);
+  const dayProgress = Math.round((dayNumber / PROTOCOL_LENGTH) * 100);
 
   return (
     <div className="relative bg-card/40 border border-border rounded-2xl p-6 sm:p-8 space-y-6 shadow-card overflow-hidden">
