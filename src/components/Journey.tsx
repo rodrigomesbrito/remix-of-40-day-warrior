@@ -14,13 +14,7 @@ export function Journey() {
         <Stat label="🔥 Streak" value={`${stats.streak}d`} accent="text-primary" />
       </div>
 
-      <div>
-        <h3 className="text-display text-xl font-semibold mb-3">Jornada</h3>
-        <JourneyGrid />
-        <p className="text-xs text-muted-foreground mt-3">
-          Toque em um dia para revisar sua execução.
-        </p>
-      </div>
+      <JourneyGrid />
     </div>
   );
 }
