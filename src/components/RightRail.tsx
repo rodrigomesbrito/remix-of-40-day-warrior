@@ -24,20 +24,25 @@ export function RightRail({ onGoJornada }: Props) {
       {/* Progresso geral */}
       <Card>
         <Label>Progresso Geral</Label>
-        <div className="flex items-center gap-4 mt-3">
+        <div className="flex items-center gap-4 mt-4">
           <Donut value={pct} />
-          <div className="text-sm">
-            <p className="text-[hsl(var(--success))] font-semibold">
+          <div className="text-sm flex-1 min-w-0">
+            <p className="text-[hsl(140_70%_55%)] font-bold text-[15px]">
               {dayShown} de {PROTOCOL_LENGTH} dias
             </p>
-            <p className="text-muted-foreground text-xs leading-snug mt-1">
-              Meta: {Math.round(TARGET_CONSISTENCY * 100)}% para liberar<br />sua missão final.
+            <p className="text-muted-foreground text-[12px] leading-snug mt-1">
+              Meta: {Math.round(TARGET_CONSISTENCY * 100)}% para liberar
+              <br />
+              sua missão final.
             </p>
           </div>
         </div>
-        <Button variant="outline" size="sm" className="w-full mt-4 justify-between" onClick={onGoJornada}>
+        <button
+          onClick={onGoJornada}
+          className="w-full mt-4 flex items-center justify-center gap-2 bg-[#0d0e12] hover:bg-[#15171c] border border-border/70 rounded-md py-2.5 text-[12px] font-extrabold uppercase tracking-[0.18em] text-foreground transition-colors"
+        >
           Ver Jornada <ChevronRight className="h-4 w-4" />
-        </Button>
+        </button>
       </Card>
 
       {/* Sequência atual */}
@@ -94,33 +99,40 @@ export function RightRail({ onGoJornada }: Props) {
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card border border-border rounded-xl p-5 shadow-card">{children}</div>
+    <div className="bg-card border border-border rounded-xl p-5 shadow-card">
+      {children}
+    </div>
   );
 }
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{children}</p>
+    <div className="relative pl-3">
+      <span className="absolute left-0 top-1/2 -translate-y-1/2 h-3 w-[3px] rounded-sm bg-primary" />
+      <p className="text-[11px] uppercase tracking-[0.2em] text-foreground font-extrabold">
+        {children}
+      </p>
+    </div>
   );
 }
 
 function Donut({ value }: { value: number }) {
-  const r = 28;
+  const r = 32;
   const c = 2 * Math.PI * r;
   const offset = c - (value / 100) * c;
   return (
-    <div className="relative h-[72px] w-[72px]">
-      <svg viewBox="0 0 72 72" className="-rotate-90 h-full w-full">
-        <circle cx="36" cy="36" r={r} stroke="hsl(var(--secondary))" strokeWidth="6" fill="none" />
+    <div className="relative h-[84px] w-[84px] shrink-0">
+      <svg viewBox="0 0 84 84" className="-rotate-90 h-full w-full">
+        <circle cx="42" cy="42" r={r} stroke="hsl(var(--secondary))" strokeWidth="7" fill="none" />
         <circle
-          cx="36" cy="36" r={r}
-          stroke="hsl(var(--success))"
-          strokeWidth="6" fill="none"
+          cx="42" cy="42" r={r}
+          stroke="hsl(140 70% 50%)"
+          strokeWidth="7" fill="none"
           strokeDasharray={c}
           strokeDashoffset={offset}
           strokeLinecap="round"
         />
       </svg>
-      <span className="absolute inset-0 flex items-center justify-center text-display text-base font-bold">
+      <span className="absolute inset-0 flex items-center justify-center text-display text-[20px] font-extrabold text-foreground">
         {value}%
       </span>
     </div>
