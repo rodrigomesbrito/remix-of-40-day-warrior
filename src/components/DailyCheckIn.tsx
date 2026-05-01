@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { toast } from "sonner";
-import { CheckCircle2, Lightbulb, Target, Info, DollarSign, Dumbbell, Brain, Flame } from "lucide-react";
+import { CheckCircle2, Lightbulb, Target, Info, DollarSign, Dumbbell, Brain } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
   forte: { label: "🟢 Dia Forte", className: "text-[hsl(var(--success))]" },
