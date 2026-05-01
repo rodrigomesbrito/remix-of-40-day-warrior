@@ -58,25 +58,35 @@ export function AppSidebar({ active, onChange }: Props) {
                 <button
                   onClick={() => onChange(it.id)}
                   className={cn(
-                    "relative w-full flex items-center gap-3 pl-3 pr-3 py-4 rounded-md text-[13px] font-medium transition-colors",
+                    "relative w-full flex items-center gap-3 pl-3 pr-3 py-4 rounded-md text-[13px] font-medium transition-colors overflow-hidden",
                     isActive
-                      ? "bg-[hsl(0_60%_22%/0.45)] text-sidebar-foreground"
+                      ? "text-sidebar-foreground"
                       : "text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
                   )}
                 >
                   {isActive && (
-                    <span className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r bg-primary" />
+                    <>
+                      <span
+                        aria-hidden
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, hsl(0 60% 22% / 0.28) 0%, hsl(0 60% 22% / 0.10) 55%, hsl(0 60% 22% / 0) 100%)",
+                        }}
+                      />
+                      <span className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r bg-primary" />
+                    </>
                   )}
                   <Icon
                     strokeWidth={1.75}
                     className={cn(
-                      "h-[18px] w-[18px] shrink-0",
+                      "relative h-[18px] w-[18px] shrink-0",
                       isActive ? "text-primary" : "text-sidebar-foreground/70",
                     )}
                   />
-                  <span className="flex-1 text-left">{it.label}</span>
+                  <span className="relative flex-1 text-left">{it.label}</span>
                   {showBadge && (
-                    <span className="bg-primary text-primary-foreground text-[10px] font-bold rounded-full min-w-[18px] h-[18px] inline-flex items-center justify-center px-1.5">
+                    <span className="relative bg-primary text-primary-foreground text-[10px] font-bold rounded-full min-w-[18px] h-[18px] inline-flex items-center justify-center px-1.5">
                       {abertasCount}
                     </span>
                   )}
