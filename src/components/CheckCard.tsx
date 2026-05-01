@@ -20,7 +20,7 @@ const ICON_STYLES: Record<
     bar: "bg-[hsl(0_85%_55%)]",
     glow:
       "bg-[linear-gradient(90deg,hsl(0_85%_50%/0.12)_0%,transparent_25%)]",
-    checkBorder: "group-hover:border-[hsl(0_85%_60%/0.7)]",
+    checkBorder: "group-hover:border-[hsl(var(--success)/0.7)] group-hover:bg-[hsl(var(--success)/0.08)]",
     ring: "focus-visible:ring-[hsl(0_85%_55%/0.6)]",
   },
   orange: {
@@ -29,7 +29,7 @@ const ICON_STYLES: Record<
     bar: "bg-[hsl(28_95%_55%)]",
     glow:
       "bg-[linear-gradient(90deg,hsl(28_95%_50%/0.12)_0%,transparent_25%)]",
-    checkBorder: "group-hover:border-[hsl(28_95%_60%/0.7)]",
+    checkBorder: "group-hover:border-[hsl(var(--success)/0.7)] group-hover:bg-[hsl(var(--success)/0.08)]",
     ring: "focus-visible:ring-[hsl(28_95%_55%/0.6)]",
   },
   purple: {
@@ -38,7 +38,7 @@ const ICON_STYLES: Record<
     bar: "bg-[hsl(265_75%_60%)]",
     glow:
       "bg-[linear-gradient(90deg,hsl(265_75%_55%/0.14)_0%,transparent_25%)]",
-    checkBorder: "group-hover:border-[hsl(265_85%_72%/0.7)]",
+    checkBorder: "group-hover:border-[hsl(var(--success)/0.7)] group-hover:bg-[hsl(var(--success)/0.08)]",
     ring: "focus-visible:ring-[hsl(265_75%_60%/0.6)]",
   },
 };
@@ -106,8 +106,8 @@ export function CheckCard({ Icon, iconColor, title, description, checked, onTogg
         >
           <Check
             className={cn(
-              "h-4 w-4 transition-all duration-200",
-              checked ? "opacity-100 scale-100" : "opacity-0 scale-50",
+              "h-4 w-4",
+              checked ? "opacity-100 animate-check-pop" : "opacity-0 scale-50",
             )}
             strokeWidth={3.5}
           />
