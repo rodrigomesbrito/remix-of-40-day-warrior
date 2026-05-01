@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { toast } from "sonner";
+import { CheckCircle2, Lightbulb, Target } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
   forte: { label: "🟢 Dia Forte", className: "text-[hsl(var(--success))]" },
@@ -51,18 +52,28 @@ export function DailyCheckIn() {
   const statusLabel = isPristine ? "🎯 Dia em aberto" : meta.label;
   const statusClass = isPristine ? "text-muted-foreground" : meta.className;
 
+  const todayDate = new Date().toLocaleDateString("pt-BR", {
+    weekday: "long", day: "2-digit", month: "long",
+  });
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="bg-card/40 border border-border rounded-xl p-6 sm:p-8 space-y-6 shadow-card">
+      <div className="flex items-start justify-between">
         <div>
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Hoje</p>
-          <h2 className="text-display text-3xl font-bold">
+          <p className="text-primary text-xs font-bold uppercase tracking-widest mb-1">Hoje</p>
+          <h2 className="text-display text-4xl font-bold leading-none">
             Dia {dayNumber}
             <span className="text-muted-foreground">/{PROTOCOL_LENGTH}</span>
           </h2>
+          <p className="text-sm text-muted-foreground mt-2 capitalize">{todayDate}</p>
         </div>
-        <span className={`text-sm font-bold uppercase tracking-wider ${statusClass}`}>{statusLabel}</span>
+        <span className={`text-sm font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${statusClass}`}>
+          <Target className="h-4 w-4" />
+          {statusLabel}
+        </span>
       </div>
+
+      <div className="border-t border-border" />
 
       <div className="flex items-center justify-between bg-secondary/40 border border-border rounded-lg p-4">
         <div>
@@ -80,7 +91,11 @@ export function DailyCheckIn() {
         />
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-3">
+      <div>
+        <p className="text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">
+          Pilares do Dia
+        </p>
+        <div className="grid gap-3">
         <CheckCard
           icon="💰"
           title="Produção"
@@ -91,7 +106,7 @@ export function DailyCheckIn() {
           onToggle={() => updateDay(dayNumber, { producao: !day.producao })}
         />
         <CheckCard
-          icon="🏋️"
+            icon="💪"
           title="Corpo"
           description={day.modoMinimo ? "10–15 min de movimento." : "20–40 min de treino ou caminhada."}
           checked={day.corpo}
@@ -106,21 +121,26 @@ export function DailyCheckIn() {
           checked={day.mentalidade}
           onToggle={() => updateDay(dayNumber, { mentalidade: !day.mentalidade })}
         />
+        </div>
       </div>
 
-      <div className="flex justify-end sticky bottom-4 z-10">
-        <Button
-          size="lg"
-          onClick={() =>
-            toast.success(`Dia ${dayNumber} salvo`, {
-              description: isPristine ? "🔴 Dia perdido — sem produção." : meta.label,
-            })
-          }
-          className="text-display tracking-wider shadow-deep"
-        >
-          Confirmar dia
-        </Button>
-      </div>
+      <Button
+        size="lg"
+        onClick={() =>
+          toast.success(`Dia ${dayNumber} salvo`, {
+            description: isPristine ? "🔴 Dia perdido — sem produção." : meta.label,
+          })
+        }
+        className="w-full h-12 text-display tracking-wider shadow-deep"
+      >
+        <CheckCircle2 className="h-5 w-5 mr-2" />
+        Confirmar Dia
+      </Button>
+
+      <p className="text-center text-xs text-muted-foreground inline-flex items-center justify-center gap-1.5 w-full">
+        <Lightbulb className="h-3.5 w-3.5 text-accent" />
+        <span><strong>Dica:</strong> Foque no mínimo com excelência todos os dias.</span>
+      </p>
     </div>
   );
 }
