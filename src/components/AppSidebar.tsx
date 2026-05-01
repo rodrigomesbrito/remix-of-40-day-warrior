@@ -37,14 +37,12 @@ export function AppSidebar({ active, onChange }: Props) {
           alt="Protocolo 40 Dias"
           className="w-[44px] h-auto object-contain"
         />
-        <p className="text-sidebar-foreground text-[12px] font-black uppercase tracking-[0.18em] text-center leading-[1.15]">
+        <p className="text-sidebar-foreground text-[14px] font-black uppercase tracking-[0.18em] text-center leading-[1.15]" style={{ fontWeight: 900 }}>
           Protocolo
           <br />
           40 Dias
         </p>
       </div>
-
-      <div className="h-px bg-sidebar-border mx-4" />
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 min-h-0">
