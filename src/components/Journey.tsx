@@ -45,7 +45,7 @@ export function Journey() {
   );
 }
 
-function Stat({ label, value, accent }: { label: string; value: number; accent: string }) {
+function Stat({ label, value, accent }: { label: string; value: number | string; accent: string }) {
   return (
     <div className="bg-card border border-border rounded-lg p-4 shadow-card">
       <p className="text-display text-xs text-muted-foreground">{label}</p>
