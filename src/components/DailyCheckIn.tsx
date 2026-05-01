@@ -7,12 +7,12 @@ import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { CheckCircle2, Lightbulb, DollarSign, Dumbbell, Brain } from "lucide-react";
+import { CheckCircle2, Lightbulb, DollarSign, Dumbbell, Brain, Zap, Moon, XCircle, Circle, type LucideIcon } from "lucide-react";
 
-const CLASS_LABEL: Record<string, { label: string; className: string }> = {
-  forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]" },
-  minimo: { label: "Dia Mínimo", className: "text-accent" },
-  perdido: { label: "Dia Perdido", className: "text-destructive-foreground" },
+const CLASS_LABEL: Record<string, { label: string; className: string; Icon: LucideIcon }> = {
+  forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]", Icon: Zap },
+  minimo: { label: "Dia Mínimo", className: "text-accent", Icon: Moon },
+  perdido: { label: "Dia Perdido", className: "text-destructive-foreground", Icon: XCircle },
 };
 
 const CLASS_BADGE: Record<string, string> = {
@@ -63,6 +63,7 @@ export function DailyCheckIn() {
   const isPristine = !day.producao && !day.corpo && !day.mentalidade;
   const statusLabel = isPristine ? "Dia em aberto" : meta.label;
   const badgeClass = isPristine ? CLASS_BADGE.aberto : CLASS_BADGE[preview];
+  const StatusIcon = isPristine ? Circle : meta.Icon;
 
   const todayDate = new Date().toLocaleDateString("pt-BR", {
     weekday: "long", day: "2-digit", month: "long",
@@ -85,6 +86,7 @@ export function DailyCheckIn() {
             badgeClass,
           )}
         >
+          <StatusIcon className="h-3.5 w-3.5" strokeWidth={2.5} />
           {statusLabel}
         </span>
       </div>
@@ -165,9 +167,9 @@ export function DailyCheckIn() {
               description: isPristine ? "Dia perdido — sem produção." : meta.label,
             })
           }
-          className="w-full h-12 text-display tracking-wider shadow-deep"
+          className="w-full h-14 text-base text-display tracking-wider shadow-deep"
         >
-          <CheckCircle2 className="!h-5 !w-5 mr-2" strokeWidth={2} />
+          <CheckCircle2 className="!h-6 !w-6 mr-2" strokeWidth={2.25} />
           Confirmar Dia
         </Button>
       </div>
