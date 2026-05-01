@@ -11,35 +11,31 @@ export function Journey() {
   const safeDay = Math.min(Math.max(dayNumber, 1), PROTOCOL_LENGTH);
 
   return (
-    <div className="bg-card/40 border border-border rounded-xl p-6 sm:p-8 space-y-6 shadow-card">
-      {/* Header — mesmo padrão visual da tela Hoje */}
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-primary text-xs font-bold uppercase tracking-widest mb-1">
-            Jornada
-          </p>
-          <h2 className="text-display text-4xl font-bold leading-none">
-            Dia {safeDay}
-            <span className="text-muted-foreground">/{PROTOCOL_LENGTH}</span>
-          </h2>
-          <p className="text-sm text-muted-foreground mt-2">
-            Sua consistência ao longo dos 40 dias
-          </p>
+    <div className="space-y-6 max-w-5xl">
+      {/* Hero header — mesmo idioma visual da tela Meta */}
+      <section className="bg-gradient-blood border border-primary/40 rounded-lg p-6 shadow-deep">
+        <div className="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-accent font-semibold mb-2">
+              🚩 Jornada de 40 dias
+            </p>
+            <h2 className="text-display text-3xl font-bold leading-none">
+              Dia {safeDay}
+              <span className="text-foreground/60">/{PROTOCOL_LENGTH}</span>
+            </h2>
+          </div>
+          <span className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-extrabold uppercase tracking-wider bg-[hsl(var(--accent)/0.18)] text-accent border-[hsl(var(--accent)/0.45)]">
+            <Flame className="h-3.5 w-3.5" strokeWidth={2.5} />
+            {stats.streak}d streak
+          </span>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-extrabold uppercase tracking-wider bg-[hsl(var(--accent)/0.18)] text-accent border-[hsl(var(--accent)/0.45)] shadow-[0_0_0_3px_hsl(var(--accent)/0.08)]">
-          <Flame className="h-3.5 w-3.5" strokeWidth={2.5} />
-          {stats.streak}d streak
-        </span>
-      </div>
-
-      <div className="border-t border-border" />
-
-      {/* Stats discretas no mesmo idioma dos cards da Hoje */}
-      <div>
-        <p className="text-xs uppercase tracking-widest text-muted-foreground font-bold mb-3">
-          Resumo
+        <p className="text-sm text-foreground/80">
+          Sua consistência ao longo dos 40 dias.
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      </section>
+
+      {/* Stats — mesmo padrão dos cards da tela Meta */}
+      <section className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <Stat
             Icon={Zap}
             label="Dias Fortes"
@@ -64,9 +60,9 @@ export function Journey() {
             value={`${stats.streak}d`}
             tone="primary"
           />
-        </div>
-      </div>
+      </section>
 
+      {/* Calendário */}
       <JourneyGrid />
     </div>
   );
