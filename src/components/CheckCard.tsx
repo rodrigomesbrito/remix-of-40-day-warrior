@@ -16,24 +16,24 @@ const ICON_STYLES: Record<
 > = {
   red: {
     bg: "bg-[hsl(0_70%_45%/0.18)]",
-    text: "text-white",
+    text: "text-[hsl(0_85%_60%)]",
     bar: "bg-[hsl(0_85%_55%)]",
     glow:
-      "bg-[linear-gradient(90deg,hsl(0_85%_50%/0.12)_0%,hsl(0_85%_50%/0.05)_30%,transparent_70%)]",
+      "bg-[linear-gradient(90deg,hsl(0_85%_50%/0.12)_0%,transparent_25%)]",
   },
   orange: {
     bg: "bg-[hsl(28_85%_50%/0.18)]",
     text: "text-[hsl(28_95%_60%)]",
     bar: "bg-[hsl(28_95%_55%)]",
     glow:
-      "bg-[linear-gradient(90deg,hsl(28_95%_50%/0.12)_0%,hsl(28_95%_50%/0.05)_30%,transparent_70%)]",
+      "bg-[linear-gradient(90deg,hsl(28_95%_50%/0.12)_0%,transparent_25%)]",
   },
   purple: {
     bg: "bg-[hsl(265_60%_55%/0.22)]",
     text: "text-[hsl(265_85%_72%)]",
     bar: "bg-[hsl(265_75%_60%)]",
     glow:
-      "bg-[linear-gradient(90deg,hsl(265_75%_55%/0.14)_0%,hsl(265_75%_55%/0.06)_30%,transparent_70%)]",
+      "bg-[linear-gradient(90deg,hsl(265_75%_55%/0.14)_0%,transparent_25%)]",
   },
 };
 
