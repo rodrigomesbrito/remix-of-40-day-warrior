@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { toast } from "sonner";
-import { CheckCircle2, Lightbulb, Target } from "lucide-react";
+import { CheckCircle2, Lightbulb, Target, Info, DollarSign, Dumbbell, Brain } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
   forte: { label: "🟢 Dia Forte", className: "text-[hsl(var(--success))]" },
@@ -75,12 +75,15 @@ export function DailyCheckIn() {
 
       <div className="border-t border-border" />
 
-      <div className="flex items-center justify-between bg-secondary/40 border border-border rounded-lg p-4">
-        <div>
-          <Label htmlFor="modo" className="text-sm font-semibold uppercase tracking-wider">
-            Modo Mínimo
-          </Label>
-          <p className="text-xs text-muted-foreground mt-1">
+      <div className="flex items-center justify-between gap-4 bg-card/60 border border-border rounded-xl px-4 py-3">
+        <div className="min-w-0">
+          <div className="flex items-center gap-1.5">
+            <Label htmlFor="modo" className="text-[13px] font-extrabold uppercase tracking-wider">
+              Modo Mínimo
+            </Label>
+            <Info className="h-3.5 w-3.5 text-muted-foreground/70" />
+          </div>
+          <p className="text-[12px] text-muted-foreground mt-0.5">
             Produção 30min · Corpo 10–15min · Mentalidade 10min. Sem produção, dia perdido.
           </p>
         </div>
@@ -97,7 +100,8 @@ export function DailyCheckIn() {
         </p>
         <div className="grid gap-3">
         <CheckCard
-          icon="💰"
+          Icon={DollarSign}
+          iconColor="red"
           title="Produção"
           description={
             day.modoMinimo ? "30 min em algo que move dinheiro." : "1 avanço relevante no faturamento."
@@ -106,14 +110,16 @@ export function DailyCheckIn() {
           onToggle={() => updateDay(dayNumber, { producao: !day.producao })}
         />
         <CheckCard
-            icon="💪"
+          Icon={Dumbbell}
+          iconColor="orange"
           title="Corpo"
           description={day.modoMinimo ? "10–15 min de movimento." : "20–40 min de treino ou caminhada."}
           checked={day.corpo}
           onToggle={() => updateDay(dayNumber, { corpo: !day.corpo })}
         />
         <CheckCard
-          icon="🧠"
+          Icon={Brain}
+          iconColor="purple"
           title="Mentalidade"
           description={
             day.modoMinimo ? "10 min de leitura ou curso." : "20–40 min de leitura/curso com intenção."
