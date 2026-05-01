@@ -7,7 +7,7 @@ import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { CheckCircle2, Lightbulb, Target, Info, DollarSign, Dumbbell, Brain } from "lucide-react";
+import { CheckCircle2, Lightbulb, Info, DollarSign, Dumbbell, Brain } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
   forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]" },
@@ -88,7 +88,6 @@ export function DailyCheckIn() {
             badgeClass,
           )}
         >
-          <Target className="h-3.5 w-3.5" strokeWidth={2.5} />
           {statusLabel}
         </span>
       </div>
@@ -99,7 +98,7 @@ export function DailyCheckIn() {
         className={cn(
           "flex items-center justify-between gap-4 border rounded-xl px-4 py-3 transition-colors",
           day.modoMinimo
-            ? "bg-[hsl(var(--accent)/0.08)] border-[hsl(var(--accent)/0.45)]"
+            ? "bg-[hsl(var(--accent)/0.04)] border-[hsl(var(--accent)/0.25)]"
             : "bg-card/60 border-border",
         )}
       >
@@ -109,7 +108,7 @@ export function DailyCheckIn() {
               Modo Mínimo
             </Label>
             {day.modoMinimo && (
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-accent bg-[hsl(var(--accent)/0.15)] border border-[hsl(var(--accent)/0.45)] rounded-full px-2 py-0.5">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground bg-muted/30 border border-border rounded-full px-2 py-0.5">
                 Ativo
               </span>
             )}
@@ -163,34 +162,6 @@ export function DailyCheckIn() {
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between text-[12px] uppercase tracking-wider font-bold">
-          <span className="text-muted-foreground">Pilares completos</span>
-          <span
-            className={cn(
-              "tabular-nums",
-              allDone
-                ? "text-[hsl(var(--success))]"
-                : completed > 0
-                  ? "text-accent"
-                  : "text-muted-foreground",
-            )}
-          >
-            {completed}/3 {allDone && "· Dia forte garantido"}
-          </span>
-        </div>
-        <div className="h-1.5 w-full rounded-full bg-muted/40 overflow-hidden">
-          <div
-            className={cn(
-              "h-full transition-all duration-500 ease-out",
-              allDone
-                ? "bg-[hsl(var(--success))]"
-                : completed > 0
-                  ? "bg-accent"
-                  : "bg-muted",
-            )}
-            style={{ width: `${(completed / 3) * 100}%` }}
-          />
-        </div>
         <Button
           size="lg"
           onClick={() =>
