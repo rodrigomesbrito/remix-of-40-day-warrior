@@ -8,7 +8,13 @@ export function ProtocolHeader() {
   const dayShown = Math.min(PROTOCOL_LENGTH, Math.max(1, dayNumber));
 
   return (
-    <header className="bg-gradient-blood border-b border-border">
+    <header
+      className="border-b border-border"
+      style={{
+        backgroundImage:
+          "linear-gradient(135deg, hsl(0 70% 32% / 0.18) 0%, hsl(0 0% 8% / 0) 70%)",
+      }}
+    >
       <div className="px-5 sm:px-8 pt-6 pb-5">
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
