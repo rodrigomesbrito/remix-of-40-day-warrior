@@ -27,18 +27,17 @@ export function AppSidebar({ active, onChange }: Props) {
     <aside
       className="hidden lg:flex flex-col w-[230px] shrink-0 border-r border-sidebar-border h-screen sticky top-0 overflow-hidden"
       style={{
-        backgroundColor: "#110F11",
+        backgroundColor: "#0D0E12",
         backgroundImage:
-          "radial-gradient(ellipse 120% 55% at 50% 0%, hsl(0 70% 18% / 0.35) 0%, transparent 65%)",
+          "radial-gradient(ellipse 120% 55% at 50% 0%, hsl(0 70% 18% / 0.25) 0%, transparent 65%)",
       }}
     >
       {/* Logo */}
-      <div className="px-4 pt-5 pb-4 flex items-center justify-center">
+      <div className="px-6 pt-5 pb-4 flex items-center justify-center">
         <img
           src={logoFull}
           alt="Protocolo 40 Dias"
-          className="w-full h-auto object-contain"
-          style={{ filter: "drop-shadow(0 0 12px hsl(0 85% 50% / 0.45))" }}
+          className="w-[70%] h-auto object-contain"
         />
       </div>
 
@@ -46,7 +45,7 @@ export function AppSidebar({ active, onChange }: Props) {
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 min-h-0">
-        <ul className="space-y-1.5">
+        <ul className="space-y-2">
           {NAV_ITEMS.map((it, idx) => {
             const Icon = it.icon;
             const isActive = active === it.id;
@@ -56,14 +55,14 @@ export function AppSidebar({ active, onChange }: Props) {
                 <button
                   onClick={() => onChange(it.id)}
                   className={cn(
-                    "relative w-full flex items-center gap-3 pl-4 pr-3 py-3 rounded-md text-[13px] font-medium transition-colors",
+                    "relative w-full flex items-center gap-3 pl-3 pr-3 py-4 rounded-md text-[13px] font-medium transition-colors",
                     isActive
                       ? "bg-[hsl(0_60%_18%/0.45)] text-sidebar-foreground"
                       : "text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
                   )}
                 >
                   {isActive && (
-                    <span className="absolute left-0 top-1 bottom-1 w-[3px] rounded-r bg-primary" />
+                    <span className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r bg-primary" />
                   )}
                   <Icon
                     strokeWidth={1.75}
@@ -87,7 +86,7 @@ export function AppSidebar({ active, onChange }: Props) {
       </nav>
 
       {/* Mountain w/ overlaid quote (top) */}
-      <div className="relative h-[260px] shrink-0 overflow-hidden border-t border-sidebar-border">
+      <div className="relative h-[360px] shrink-0 overflow-hidden border-t border-sidebar-border">
         <img
           src={mountain}
           alt=""
