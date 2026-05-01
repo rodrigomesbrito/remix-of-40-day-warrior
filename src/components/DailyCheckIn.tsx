@@ -7,7 +7,6 @@ import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { toast } from "sonner";
 import { CheckCircle2, Lightbulb, Target, Info, DollarSign, Dumbbell, Brain, Flame } from "lucide-react";
-import { PROTOCOL_LENGTH as PL } from "@/lib/protocol";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
   forte: { label: "🟢 Dia Forte", className: "text-[hsl(var(--success))]" },
