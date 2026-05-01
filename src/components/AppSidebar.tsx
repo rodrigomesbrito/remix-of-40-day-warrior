@@ -32,13 +32,18 @@ export function AppSidebar({ active, onChange }: Props) {
       }}
     >
       {/* Logo */}
-      <div className="px-6 pt-7 pb-6 flex items-center justify-center">
+      <div className="px-5 pt-7 pb-6 flex flex-col items-center text-center gap-3">
         <img
           src={shield}
           alt="Protocolo 40 Dias"
-          className="h-[110px] w-auto object-contain"
+          className="h-[96px] w-auto object-contain"
           style={{ filter: "drop-shadow(0 0 14px hsl(0 85% 50% / 0.5))" }}
         />
+        <p className="text-display text-[14px] font-bold leading-[1.15] tracking-[0.18em] text-sidebar-foreground">
+          PROTOCOLO
+          <br />
+          40 DIAS
+        </p>
       </div>
 
       <div className="h-px bg-sidebar-border mx-4" />
