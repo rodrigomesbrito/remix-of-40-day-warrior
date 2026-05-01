@@ -52,65 +52,28 @@ export function RightRail({ onGoJornada }: Props) {
         </p>
       </Card>
 
-      {/* Recompensa — destaque */}
-      <div
-        className="relative overflow-hidden rounded-xl border border-primary/30 p-5 shadow-card"
-        style={{
-          backgroundImage:
-            "linear-gradient(135deg, hsl(0 70% 18% / 0.6) 0%, hsl(0 0% 9% / 0.95) 65%)",
-        }}
-      >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -top-12 -right-12 h-32 w-32 rounded-full"
-          style={{ background: "radial-gradient(circle, hsl(0 85% 55% / 0.35), transparent 70%)" }}
-        />
-        <div className="relative">
-          <Label>Recompensa</Label>
-          <div className="flex items-center gap-3 mt-3">
-            <div className="h-10 w-10 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center text-xl">
-              📱
-            </div>
-            <div>
-              <p className="text-sm font-bold uppercase tracking-wider leading-none">Celular Novo</p>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Missão Final</p>
-            </div>
-          </div>
-
-          <div className="mt-4">
-            <div className="flex items-center justify-between text-[10px] uppercase tracking-widest font-bold mb-1.5">
-              <span className="text-muted-foreground">Consistência</span>
-              <span className={onTrack ? "text-[hsl(var(--success))]" : "text-primary"}>
-                {consistPct}% / {Math.round(TARGET_CONSISTENCY * 100)}%
-              </span>
-            </div>
-            <div className="h-1.5 w-full rounded-full bg-secondary overflow-hidden">
-              <div
-                className={`h-full transition-all ${onTrack ? "bg-[hsl(var(--success))]" : "bg-gradient-to-r from-primary to-[hsl(var(--primary-glow))]"}`}
-                style={{ width: `${Math.min(100, consistPct)}%` }}
-              />
-            </div>
-          </div>
-
-          <div className="mt-3 flex items-center gap-1.5 text-[11px]">
-            {onTrack ? (
-              <>
-                <Unlock className="h-3.5 w-3.5 text-[hsl(var(--success))]" />
-                <span className="font-semibold uppercase tracking-wider text-[hsl(var(--success))]">
-                  Recompensa liberada
-                </span>
-              </>
-            ) : (
-              <>
-                <Lock className="h-3.5 w-3.5 text-primary" />
-                <span className="font-semibold uppercase tracking-wider text-foreground/70">
-                  Faltam {Math.max(0, Math.round(TARGET_CONSISTENCY * 100) - consistPct)}% para liberar
-                </span>
-              </>
-            )}
-          </div>
+      {/* Recompensa */}
+      <Card>
+        <Label>Recompensa</Label>
+        <div className="flex items-center gap-2 mt-3">
+          <span className="text-xl">📱</span>
+          <p className="text-sm font-bold uppercase tracking-wider">Celular Novo</p>
         </div>
-      </div>
+        <p className="text-xs text-muted-foreground mt-2">Missão Final</p>
+        <div className="mt-4 flex items-center gap-2 text-xs">
+          {onTrack ? (
+            <Unlock className="h-3.5 w-3.5 text-[hsl(var(--success))]" />
+          ) : (
+            <Lock className="h-3.5 w-3.5 text-primary" />
+          )}
+          <span className="font-semibold uppercase tracking-wider text-foreground/80">
+            Liberado com {Math.round(TARGET_CONSISTENCY * 100)}% · Agora{" "}
+            <strong className={onTrack ? "text-[hsl(var(--success))]" : "text-primary"}>
+              {consistPct}%
+            </strong>
+          </span>
+        </div>
+      </Card>
 
       {/* Lembrete */}
       <Card>
