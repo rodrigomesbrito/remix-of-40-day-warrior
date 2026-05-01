@@ -19,7 +19,7 @@ const Index = () => {
       <ProtocolHeader />
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <Tabs defaultValue="hoje" className="w-full">
-          <TabsList className="grid w-full grid-cols-5 bg-secondary mb-8">
+          <TabsList className="flex w-full overflow-x-auto sm:grid sm:grid-cols-5 bg-secondary mb-8">
             <TabsTrigger value="hoje" className="text-display">Hoje</TabsTrigger>
             <TabsTrigger value="jornada" className="text-display">Jornada</TabsTrigger>
             <TabsTrigger value="pendencias" className="text-display">Pendências</TabsTrigger>

@@ -17,8 +17,7 @@ export function ProtocolHeader() {
         </div>
         <div className="flex items-center gap-5 text-display">
           <Stat label="Dia" value={`${dayShown}/${PROTOCOL_LENGTH}`} />
-          <Stat label="Streak" value={`${stats.streak}🔥`} />
-          <Stat label="Consist." value={`${Math.round(stats.consistencia * 100)}%`} />
+        <Stat label="Streak" value={`🔥 ${stats.streak}`} />
         </div>
       <div className="w-full flex items-center justify-between gap-3 bg-background/30 border border-border/50 rounded-md px-3 py-2 text-display">
         <span className="text-sm">

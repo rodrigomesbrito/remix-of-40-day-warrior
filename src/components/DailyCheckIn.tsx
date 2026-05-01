@@ -46,6 +46,10 @@ export function DailyCheckIn() {
 
   const preview = classifyDay(day);
   const meta = CLASS_LABEL[preview];
+  // Antes do primeiro check, não comunicar "Dia Perdido" — evita derrota visual logo de cara.
+  const isPristine = !day.producao && !day.corpo && !day.mentalidade;
+  const statusLabel = isPristine ? "🎯 Dia em aberto" : meta.label;
+  const statusClass = isPristine ? "text-muted-foreground" : meta.className;
 
   return (
     <div className="space-y-6">
@@ -57,7 +61,7 @@ export function DailyCheckIn() {
             <span className="text-muted-foreground">/{PROTOCOL_LENGTH}</span>
           </h2>
         </div>
-        <span className={`text-display font-semibold ${meta.className}`}>{meta.label}</span>
+        <span className={`text-display font-semibold ${statusClass}`}>{statusLabel}</span>
       </div>
 
       <div className="flex items-center justify-between bg-secondary/50 border border-border rounded-lg p-4">
@@ -104,10 +108,15 @@ export function DailyCheckIn() {
         />
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end sticky bottom-4 z-10">
         <Button
-          onClick={() => toast.success(`Dia ${dayNumber} salvo · ${meta.label}`)}
-          className="text-display tracking-wider"
+          size="lg"
+          onClick={() =>
+            toast.success(`Dia ${dayNumber} salvo`, {
+              description: isPristine ? "🔴 Dia perdido — sem produção." : meta.label,
+            })
+          }
+          className="text-display tracking-wider shadow-deep"
         >
           Confirmar dia
         </Button>
