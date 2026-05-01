@@ -32,26 +32,13 @@ export function AppSidebar({ active, onChange }: Props) {
       }}
     >
       {/* Logo */}
-      <div className="px-6 pt-7 pb-6 text-center">
-        <div className="mx-auto mb-3 w-[72px] h-[72px] flex items-center justify-center">
-          <img
-            src={shield}
-            alt="Protocolo 40 Dias"
-            className="w-full h-full object-contain object-left"
-            style={{
-              objectFit: "none",
-              objectPosition: "left center",
-              transform: "scale(0.55)",
-              transformOrigin: "left center",
-              filter: "drop-shadow(0 0 12px hsl(0 85% 50% / 0.45))",
-            }}
-          />
-        </div>
-        <p className="text-display text-[13px] font-bold leading-tight tracking-[0.18em]">
-          PROTOCOLO
-          <br />
-          40 DIAS
-        </p>
+      <div className="px-6 pt-7 pb-6 flex items-center justify-center">
+        <img
+          src={shield}
+          alt="Protocolo 40 Dias"
+          className="h-[110px] w-auto object-contain"
+          style={{ filter: "drop-shadow(0 0 14px hsl(0 85% 50% / 0.5))" }}
+        />
       </div>
 
       <div className="h-px bg-sidebar-border mx-4" />
