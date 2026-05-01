@@ -1,6 +1,6 @@
 import { Home, Flag, ClipboardList, Target, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
-import logoFull from "@/assets/logo-full.png";
+import logoIcon from "@/assets/logo-icon.png";
 import mountain from "@/assets/mountain.jpg";
 import { usePendencias } from "@/hooks/usePendencias";
 
@@ -31,12 +31,17 @@ export function AppSidebar({ active, onChange }: Props) {
       }}
     >
       {/* Logo */}
-      <div className="px-6 pt-5 pb-4 flex items-center justify-center">
+      <div className="px-6 pt-7 pb-6 flex flex-col items-center justify-center gap-3">
         <img
-          src={logoFull}
+          src={logoIcon}
           alt="Protocolo 40 Dias"
-          className="w-[70%] h-auto object-contain"
+          className="w-[72px] h-auto object-contain"
         />
+        <p className="text-sidebar-foreground text-[13px] font-extrabold uppercase tracking-[0.22em] text-center leading-[1.25]">
+          Protocolo
+          <br />
+          40 Dias
+        </p>
       </div>
 
       <div className="h-px bg-sidebar-border mx-4" />
