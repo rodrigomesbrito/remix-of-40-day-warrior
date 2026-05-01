@@ -18,7 +18,7 @@ export function JourneyGrid() {
 
   return (
     <>
-      <div className="grid grid-cols-5 sm:grid-cols-8 gap-2">
+      <div className="grid grid-cols-8 gap-2">
         {Array.from({ length: PROTOCOL_LENGTH }, (_, i) => {
           const n = i + 1;
           const rec = state.days[n];
