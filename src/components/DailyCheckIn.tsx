@@ -7,7 +7,7 @@ import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { CheckCircle2, Lightbulb, Info, DollarSign, Dumbbell, Brain } from "lucide-react";
+import { CheckCircle2, Lightbulb, DollarSign, Dumbbell, Brain } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
   forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]" },
@@ -95,7 +95,7 @@ export function DailyCheckIn() {
         className={cn(
           "flex items-center justify-between gap-4 border rounded-xl px-4 py-3 transition-colors",
           day.modoMinimo
-            ? "bg-[hsl(var(--accent)/0.04)] border-[hsl(var(--accent)/0.25)]"
+            ? "bg-card/40 border-border/60"
             : "bg-card/60 border-border",
         )}
       >
@@ -109,7 +109,6 @@ export function DailyCheckIn() {
                 Ativo
               </span>
             )}
-            <Info className="h-3.5 w-3.5 text-muted-foreground/70" />
           </div>
           <p className="text-[12px] text-muted-foreground mt-0.5">
             Produção 30min · Corpo 10–15min · Mentalidade 10min. Sem produção, dia perdido.
