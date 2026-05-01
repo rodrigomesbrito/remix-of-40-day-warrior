@@ -9,9 +9,9 @@ import { toast } from "sonner";
 import { CheckCircle2, Lightbulb, Target, Info, DollarSign, Dumbbell, Brain } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string }> = {
-  forte: { label: "🟢 Dia Forte", className: "text-[hsl(var(--success))]" },
-  minimo: { label: "🟡 Dia Mínimo", className: "text-accent" },
-  perdido: { label: "🔴 Dia Perdido", className: "text-destructive-foreground" },
+  forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]" },
+  minimo: { label: "Dia Mínimo", className: "text-accent" },
+  perdido: { label: "Dia Perdido", className: "text-destructive-foreground" },
 };
 
 export function DailyCheckIn() {
@@ -49,7 +49,7 @@ export function DailyCheckIn() {
   const meta = CLASS_LABEL[preview];
   // Antes do primeiro check, não comunicar "Dia Perdido" — evita derrota visual logo de cara.
   const isPristine = !day.producao && !day.corpo && !day.mentalidade;
-  const statusLabel = isPristine ? "🎯 Dia em aberto" : meta.label;
+  const statusLabel = isPristine ? "Dia em aberto" : meta.label;
   const statusClass = isPristine ? "text-muted-foreground" : meta.className;
 
   const todayDate = new Date().toLocaleDateString("pt-BR", {
@@ -134,12 +134,12 @@ export function DailyCheckIn() {
         size="lg"
         onClick={() =>
           toast.success(`Dia ${dayNumber} salvo`, {
-            description: isPristine ? "🔴 Dia perdido — sem produção." : meta.label,
+            description: isPristine ? "Dia perdido — sem produção." : meta.label,
           })
         }
         className="w-full h-12 text-display tracking-wider shadow-deep"
       >
-        <CheckCircle2 className="!h-9 !w-9 mr-2" strokeWidth={2.5} />
+        <CheckCircle2 className="!h-5 !w-5 mr-2" strokeWidth={2} />
         Confirmar Dia
       </Button>
 

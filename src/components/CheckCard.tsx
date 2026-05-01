@@ -12,7 +12,7 @@ interface Props {
 
 const ICON_STYLES: Record<
   Props["iconColor"],
-  { bg: string; text: string; bar: string; glow: string; checkBg: string; checkBorder: string; ring: string }
+  { bg: string; text: string; bar: string; glow: string; checkBorder: string; ring: string }
 > = {
   red: {
     bg: "bg-[hsl(0_70%_45%/0.18)]",
@@ -20,7 +20,6 @@ const ICON_STYLES: Record<
     bar: "bg-[hsl(0_85%_55%)]",
     glow:
       "bg-[linear-gradient(90deg,hsl(0_85%_50%/0.12)_0%,transparent_25%)]",
-    checkBg: "bg-[hsl(0_85%_55%)] border-[hsl(0_85%_55%)] text-white",
     checkBorder: "group-hover:border-[hsl(0_85%_60%/0.7)]",
     ring: "focus-visible:ring-[hsl(0_85%_55%/0.6)]",
   },
@@ -30,7 +29,6 @@ const ICON_STYLES: Record<
     bar: "bg-[hsl(28_95%_55%)]",
     glow:
       "bg-[linear-gradient(90deg,hsl(28_95%_50%/0.12)_0%,transparent_25%)]",
-    checkBg: "bg-[hsl(28_95%_55%)] border-[hsl(28_95%_55%)] text-[hsl(0_0%_8%)]",
     checkBorder: "group-hover:border-[hsl(28_95%_60%/0.7)]",
     ring: "focus-visible:ring-[hsl(28_95%_55%/0.6)]",
   },
@@ -40,7 +38,6 @@ const ICON_STYLES: Record<
     bar: "bg-[hsl(265_75%_60%)]",
     glow:
       "bg-[linear-gradient(90deg,hsl(265_75%_55%/0.14)_0%,transparent_25%)]",
-    checkBg: "bg-[hsl(265_75%_60%)] border-[hsl(265_75%_60%)] text-white",
     checkBorder: "group-hover:border-[hsl(265_85%_72%/0.7)]",
     ring: "focus-visible:ring-[hsl(265_75%_60%/0.6)]",
   },
@@ -103,7 +100,7 @@ export function CheckCard({ Icon, iconColor, title, description, checked, onTogg
             "shrink-0 h-7 w-7 rounded-lg border-2 flex items-center justify-center",
             "transition-all duration-200 ease-out",
             checked
-              ? cn(styles.checkBg, "scale-110 shadow-[0_0_0_4px_hsl(0_0%_100%/0.04)]")
+              ? "bg-[hsl(var(--success))] border-[hsl(var(--success))] text-white scale-110 shadow-[0_0_0_4px_hsl(var(--success)/0.18)]"
               : cn("border-muted-foreground/40", styles.checkBorder),
           )}
         >
