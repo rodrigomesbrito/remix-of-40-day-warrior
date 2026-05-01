@@ -10,21 +10,30 @@ interface Props {
   onToggle: () => void;
 }
 
-const ICON_STYLES: Record<Props["iconColor"], { bg: string; text: string; bar: string }> = {
+const ICON_STYLES: Record<
+  Props["iconColor"],
+  { bg: string; text: string; bar: string; glow: string }
+> = {
   red: {
     bg: "bg-[hsl(0_70%_45%/0.18)]",
     text: "text-[hsl(0_85%_60%)]",
     bar: "bg-[hsl(0_85%_55%)]",
+    glow:
+      "bg-[linear-gradient(90deg,hsl(0_85%_50%/0.28)_0%,hsl(0_85%_50%/0.12)_30%,transparent_70%)]",
   },
   orange: {
     bg: "bg-[hsl(28_85%_50%/0.18)]",
-    text: "text-[hsl(28_95%,60%)]",
+    text: "text-[hsl(28_95%_60%)]",
     bar: "bg-[hsl(28_95%_55%)]",
+    glow:
+      "bg-[linear-gradient(90deg,hsl(28_95%_50%/0.28)_0%,hsl(28_95%_50%/0.12)_30%,transparent_70%)]",
   },
   purple: {
     bg: "bg-[hsl(265_60%_55%/0.22)]",
     text: "text-[hsl(265_85%_72%)]",
     bar: "bg-[hsl(265_75%_60%)]",
+    glow:
+      "bg-[linear-gradient(90deg,hsl(265_75%_55%/0.32)_0%,hsl(265_75%_55%/0.14)_30%,transparent_70%)]",
   },
 };
 
@@ -40,7 +49,11 @@ export function CheckCard({ Icon, iconColor, title, description, checked, onTogg
       )}
     >
       <span className={cn("absolute left-0 top-0 bottom-0 w-[3px]", styles.bar)} />
-      <div className="flex items-center gap-4">
+      <span
+        aria-hidden
+        className={cn("pointer-events-none absolute inset-0", styles.glow)}
+      />
+      <div className="relative flex items-center gap-4">
         <div
           className={cn(
             "shrink-0 h-11 w-11 rounded-full flex items-center justify-center",
