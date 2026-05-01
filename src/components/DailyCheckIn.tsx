@@ -88,7 +88,6 @@ export function DailyCheckIn() {
             badgeClass,
           )}
         >
-          <Target className="h-3.5 w-3.5" strokeWidth={2.5} />
           {statusLabel}
         </span>
       </div>
@@ -163,21 +162,6 @@ export function DailyCheckIn() {
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between text-[12px] uppercase tracking-wider font-bold">
-          <span className="text-muted-foreground">Pilares completos</span>
-          <span
-            className={cn(
-              "tabular-nums",
-              allDone
-                ? "text-[hsl(var(--success))]"
-                : completed > 0
-                  ? "text-accent"
-                  : "text-muted-foreground",
-            )}
-          >
-            {completed}/3 {allDone && "· Dia forte garantido"}
-          </span>
-        </div>
         <div className="h-1.5 w-full rounded-full bg-muted/40 overflow-hidden">
           <div
             className={cn(
