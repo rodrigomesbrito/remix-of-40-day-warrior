@@ -18,7 +18,8 @@ const items = [
 ];
 
 export function AppSidebar({ active, onChange }: Props) {
-  const { abertas } = usePendencias();
+  const { items } = usePendencias();
+  const abertasCount = items.filter((p) => !p.feita).length;
 
   return (
     <aside className="hidden lg:flex flex-col w-[230px] shrink-0 bg-sidebar border-r border-sidebar-border min-h-screen sticky top-0">
@@ -31,7 +32,7 @@ export function AppSidebar({ active, onChange }: Props) {
         {items.map((it) => {
           const Icon = it.icon;
           const isActive = active === it.id;
-          const showBadge = it.id === "pendencias" && abertas.length > 0;
+          const showBadge = it.id === "pendencias" && abertasCount > 0;
           return (
             <button
               key={it.id}
@@ -47,7 +48,7 @@ export function AppSidebar({ active, onChange }: Props) {
               <span className="flex-1 text-left">{it.label}</span>
               {showBadge && (
                 <span className="bg-primary text-primary-foreground text-[10px] font-bold rounded-full min-w-[18px] h-[18px] inline-flex items-center justify-center px-1">
-                  {abertas.length}
+                  {abertasCount}
                 </span>
               )}
             </button>
