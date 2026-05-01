@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PROTOCOL_LENGTH, TARGET_CONSISTENCY } from "@/lib/protocol";
+import { Pencil } from "lucide-react";
 
 function fmtBRL(n: number) {
   return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
@@ -102,7 +103,8 @@ export function Meta() {
             </div>
           </div>
         ) : (
-          <Button variant="outline" onClick={startEdit} className="w-full">
+          <Button variant="secondary" onClick={startEdit} className="w-full text-display">
+            <Pencil className="h-4 w-4 mr-2" />
             Atualizar meta / progresso
           </Button>
         )}
