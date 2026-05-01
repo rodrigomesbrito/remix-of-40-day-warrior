@@ -37,7 +37,7 @@ export function AppSidebar({ active, onChange }: Props) {
           alt="Protocolo 40 Dias"
           className="w-[44px] h-auto object-contain"
         />
-        <p className="text-sidebar-foreground text-[12px] font-extrabold uppercase tracking-[0.18em] text-center leading-[1.15]">
+        <p className="text-sidebar-foreground text-[12px] font-black uppercase tracking-[0.18em] text-center leading-[1.15]">
           Protocolo
           <br />
           40 Dias
