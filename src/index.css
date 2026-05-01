@@ -80,6 +80,9 @@
     font-family: 'Archivo Black', system-ui, sans-serif;
     letter-spacing: 0.02em;
   }
+
+  /* Inputs/labels devem usar a stack base */
+  input, textarea, select, button { font-family: inherit; }
 }
 
 @layer utilities {
