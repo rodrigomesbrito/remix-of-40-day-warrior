@@ -20,6 +20,18 @@ export function ProtocolHeader() {
           <Stat label="Streak" value={`${stats.streak}🔥`} />
           <Stat label="Consist." value={`${Math.round(stats.consistencia * 100)}%`} />
         </div>
+      <div className="w-full flex items-center justify-between gap-3 bg-background/30 border border-border/50 rounded-md px-3 py-2 text-display">
+        <span className="text-sm">
+          📱 <span className="text-foreground/70">Missão final:</span>{" "}
+          <strong>Celular novo</strong>
+        </span>
+        <span className="text-xs text-foreground/70">
+          🔓 Liberado com 80% · agora{" "}
+          <strong className={Math.round(stats.consistencia * 100) >= 80 ? "text-[hsl(var(--success))]" : "text-accent"}>
+            {Math.round(stats.consistencia * 100)}%
+          </strong>
+        </span>
+      </div>
       </div>
     </header>
   );
