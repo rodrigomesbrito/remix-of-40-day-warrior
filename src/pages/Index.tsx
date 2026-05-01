@@ -40,7 +40,7 @@ const Index = () => {
         <div className="flex flex-1 min-h-0">
           <main className="flex-1 min-w-0 px-5 sm:px-8 py-6">
             {/* Tabs estilo pills (como na referência) */}
-            <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+            <div className="flex gap-1.5 mb-6 overflow-x-auto pb-1 scrollbar-none">
               {TABS.map(({ id, label, icon: Icon }) => {
                 const active = tab === id;
                 return (
@@ -48,7 +48,7 @@ const Index = () => {
                     key={id}
                     onClick={() => setTab(id)}
                     className={cn(
-                      "flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-bold uppercase tracking-wider transition-colors whitespace-nowrap",
+                      "flex items-center gap-2 px-3.5 py-2 rounded-md text-xs font-bold uppercase tracking-wider transition-colors whitespace-nowrap",
                       active
                         ? "bg-primary text-primary-foreground shadow-deep"
                         : "text-muted-foreground hover:text-foreground hover:bg-secondary",
