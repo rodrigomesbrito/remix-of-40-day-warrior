@@ -197,6 +197,7 @@ export function DailyCheckIn() {
         <Lightbulb className="h-3.5 w-3.5 text-accent" />
         <span><strong>Dica:</strong> Foque no mínimo com excelência todos os dias.</span>
       </p>
+      </div>
     </div>
   );
 }
