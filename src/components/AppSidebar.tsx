@@ -9,7 +9,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-const items = [
+const NAV_ITEMS = [
   { id: "hoje", label: "Hoje", icon: Home },
   { id: "jornada", label: "Jornada", icon: Flag },
   { id: "pendencias", label: "Pendências", icon: ClipboardList },
@@ -29,7 +29,7 @@ export function AppSidebar({ active, onChange }: Props) {
       </div>
 
       <nav className="flex-1 px-3 py-5 space-y-1">
-        {items.map((it) => {
+        {NAV_ITEMS.map((it) => {
           const Icon = it.icon;
           const isActive = active === it.id;
           const showBadge = it.id === "pendencias" && abertasCount > 0;
