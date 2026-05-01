@@ -89,22 +89,22 @@ export function AppSidebar({ active, onChange }: Props) {
       </nav>
 
       {/* Mountain w/ overlaid quote (top) */}
-      <div className="relative h-[360px] shrink-0 overflow-hidden">
+      <div className="relative h-[360px] shrink-0 overflow-hidden opacity-55">
         <img
           src={mountain}
           alt=""
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover grayscale-[35%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E12] via-[#0D0E12]/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E12] via-[#0D0E12]/85 to-[#0D0E12]/40" />
         <div className="absolute top-0 left-0 right-0 z-10 flex flex-col px-5 pt-3">
-          <p className="text-primary text-[40px] leading-none mb-1 font-display">“</p>
-          <p className="text-[15px] font-semibold leading-snug text-sidebar-foreground">
+          <p className="text-primary/70 text-[40px] leading-none mb-1 font-display">“</p>
+          <p className="text-[14px] font-semibold leading-snug text-sidebar-foreground/85">
             Disciplina hoje,
             <br />
             resultado amanhã.
           </p>
-          <p className="text-[12px] text-sidebar-foreground/80 mt-1">
+          <p className="text-[11px] text-sidebar-foreground/55 mt-1">
             – Foque no processo.
           </p>
         </div>
