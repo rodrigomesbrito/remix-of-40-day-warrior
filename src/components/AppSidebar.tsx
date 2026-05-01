@@ -92,7 +92,7 @@ export function AppSidebar({ active, onChange }: Props) {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E12] via-[#0D0E12]/70 to-transparent" />
-        <div className="relative z-10 flex flex-col px-5 pt-2">
+        <div className="absolute top-0 left-0 right-0 z-10 flex flex-col px-5 pt-3">
           <p className="text-primary text-[40px] leading-none mb-1 font-display">“</p>
           <p className="text-[15px] font-semibold leading-snug text-sidebar-foreground">
             Disciplina hoje,
