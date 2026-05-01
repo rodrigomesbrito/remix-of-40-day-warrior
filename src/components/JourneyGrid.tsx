@@ -78,34 +78,33 @@ export function JourneyGrid() {
 
   return (
     <>
-      <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-          <div>
-            <h3 className="text-display text-xl">Sua Jornada</h3>
-            <p className="text-xs text-muted-foreground mt-0.5">Acompanhe sua consistência diária</p>
-          </div>
+      <div className="rounded-xl border border-border bg-card/60 overflow-hidden">
+        {/* Header — mês + navegação */}
+        <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-b border-border">
+          <p className="text-xs uppercase tracking-widest text-muted-foreground font-bold">
+            Calendário
+          </p>
           <div className="flex items-center gap-2">
             <button
               onClick={goPrev}
-              className="h-9 w-9 inline-flex items-center justify-center rounded-md border border-border hover:bg-secondary transition-colors"
+              className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-border hover:bg-secondary transition-colors"
               aria-label="Mês anterior"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
-            <div className="h-9 px-4 inline-flex items-center justify-center rounded-md border border-border min-w-[160px] text-sm font-semibold">
+            <div className="h-8 px-3 inline-flex items-center justify-center rounded-md border border-border min-w-[150px] text-[12px] font-extrabold uppercase tracking-wider">
               {MONTHS[cursor.m]} {cursor.y}
             </div>
             <button
               onClick={goNext}
-              className="h-9 w-9 inline-flex items-center justify-center rounded-md border border-border hover:bg-secondary transition-colors"
+              className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-border hover:bg-secondary transition-colors"
               aria-label="Próximo mês"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
             <button
               onClick={goToday}
-              className="h-9 px-4 inline-flex items-center justify-center rounded-md border border-border hover:bg-secondary transition-colors text-xs font-semibold tracking-wider uppercase"
+              className="h-8 px-3 inline-flex items-center justify-center rounded-md border border-border hover:bg-secondary transition-colors text-[11px] font-extrabold tracking-wider uppercase"
             >
               Hoje
             </button>
@@ -113,7 +112,7 @@ export function JourneyGrid() {
         </div>
 
         {/* Weekday header */}
-        <div className="grid grid-cols-7 border-b border-border">
+        <div className="grid grid-cols-7 border-b border-border bg-card/40">
           {WEEKDAYS.map((w) => (
             <div
               key={w}
