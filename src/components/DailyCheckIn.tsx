@@ -64,9 +64,6 @@ export function DailyCheckIn() {
   const statusLabel = isPristine ? "Dia em aberto" : meta.label;
   const badgeClass = isPristine ? CLASS_BADGE.aberto : CLASS_BADGE[preview];
 
-  const completed = [day.producao, day.corpo, day.mentalidade].filter(Boolean).length;
-  const allDone = completed === 3;
-
   const todayDate = new Date().toLocaleDateString("pt-BR", {
     weekday: "long", day: "2-digit", month: "long",
   });
