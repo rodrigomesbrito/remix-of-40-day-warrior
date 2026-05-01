@@ -1,4 +1,4 @@
-import { Bell, ChevronRight, Flame } from "lucide-react";
+import { Bell, ChevronRight, Flame, Lock, Unlock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProtocol } from "@/hooks/useProtocol";
 import { PROTOCOL_LENGTH, TARGET_CONSISTENCY, classifyDay, emptyDay } from "@/lib/protocol";
@@ -15,9 +15,9 @@ export function RightRail({ onGoJornada }: Props) {
   const pct = Math.round((dayShown / PROTOCOL_LENGTH) * 100);
   const today = state.days[dayNumber] ?? emptyDay();
   const cls = classifyDay(today);
-  const todoPilares = !today.producao || !today.corpo || !today.mentalidade;
-  const dayConfirmed = !!state.days[dayNumber];
   const bestStreak = computeBestStreak(state);
+  const consistPct = Math.round(stats.consistencia * 100);
+  const onTrack = stats.consistencia >= TARGET_CONSISTENCY;
 
   return (
     <aside className="hidden xl:flex flex-col gap-4 w-[320px] shrink-0">
@@ -52,14 +52,27 @@ export function RightRail({ onGoJornada }: Props) {
         </p>
       </Card>
 
-      {/* Próximos passos */}
+      {/* Recompensa */}
       <Card>
-        <Label>Próximos Passos</Label>
-        <ul className="mt-3 space-y-2 text-sm">
-          <Step done={!todoPilares} text="Complete os 3 pilares de hoje" />
-          <Step done={dayConfirmed} text="Confirme seu dia" />
-          <Step done={stats.streak >= 2} text="Mantenha sua sequência" />
-        </ul>
+        <Label>Recompensa</Label>
+        <div className="flex items-center gap-2 mt-3">
+          <span className="text-xl">📱</span>
+          <p className="text-sm font-bold uppercase tracking-wider">Celular Novo</p>
+        </div>
+        <p className="text-xs text-muted-foreground mt-2">Missão Final</p>
+        <div className="mt-4 flex items-center gap-2 text-xs">
+          {onTrack ? (
+            <Unlock className="h-3.5 w-3.5 text-[hsl(var(--success))]" />
+          ) : (
+            <Lock className="h-3.5 w-3.5 text-primary" />
+          )}
+          <span className="font-semibold uppercase tracking-wider text-foreground/80">
+            Liberado com {Math.round(TARGET_CONSISTENCY * 100)}% · Agora{" "}
+            <strong className={onTrack ? "text-[hsl(var(--success))]" : "text-primary"}>
+              {consistPct}%
+            </strong>
+          </span>
+        </div>
       </Card>
 
       {/* Lembrete */}
@@ -87,20 +100,6 @@ function Card({ children }: { children: React.ReactNode }) {
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{children}</p>
-  );
-}
-
-function Step({ done, text }: { done: boolean; text: string }) {
-  return (
-    <li className="flex items-center gap-2">
-      <span
-        className={
-          "inline-block h-3.5 w-3.5 rounded-full border-2 " +
-          (done ? "border-[hsl(var(--success))] bg-[hsl(var(--success))]/20" : "border-primary/70")
-        }
-      />
-      <span className={done ? "text-muted-foreground line-through" : "text-foreground/90"}>{text}</span>
-    </li>
   );
 }
 

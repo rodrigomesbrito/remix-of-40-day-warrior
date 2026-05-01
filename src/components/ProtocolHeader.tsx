@@ -1,13 +1,11 @@
 import { useProtocol } from "@/hooks/useProtocol";
 import { PROTOCOL_LENGTH, TARGET_CONSISTENCY } from "@/lib/protocol";
-import { Flame, Lock, Unlock } from "lucide-react";
+import { Flame } from "lucide-react";
 
 export function ProtocolHeader() {
   const { stats, dayNumber } = useProtocol();
   if (!stats) return null;
   const dayShown = Math.min(PROTOCOL_LENGTH, Math.max(1, dayNumber));
-  const consistPct = Math.round(stats.consistencia * 100);
-  const onTrack = stats.consistencia >= TARGET_CONSISTENCY;
 
   return (
     <header className="bg-gradient-blood border-b border-border">
@@ -23,26 +21,6 @@ export function ProtocolHeader() {
             <Stat label="Dia" value={`${dayShown}/${PROTOCOL_LENGTH}`} />
             <StatStreak value={stats.streak} />
           </div>
-        </div>
-
-        <div className="mt-5 flex items-center justify-between gap-3 bg-background/40 border border-border/60 rounded-md px-4 py-3">
-          <span className="text-sm flex items-center gap-2">
-            📱 <span className="font-bold uppercase tracking-wider text-sm">Missão Final:</span>{" "}
-            <span className="font-bold uppercase tracking-wider">Celular Novo</span>
-          </span>
-          <span className="text-xs flex items-center gap-2 text-foreground/80">
-            {onTrack ? (
-              <Unlock className="h-3.5 w-3.5 text-[hsl(var(--success))]" />
-            ) : (
-              <Lock className="h-3.5 w-3.5" />
-            )}
-            <span className="font-semibold uppercase tracking-wider">
-              Liberado com 80% · Agora{" "}
-              <strong className={onTrack ? "text-[hsl(var(--success))]" : "text-primary"}>
-                {consistPct}%
-              </strong>
-            </span>
-          </span>
         </div>
       </div>
     </header>
