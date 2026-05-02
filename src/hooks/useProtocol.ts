@@ -96,10 +96,11 @@ export function useProtocol() {
   }, []);
 
   const seedDemoArchive = useCallback(() => {
+    const baseN = loadArchive().length;
     const samples: ArchivedProtocol[] = [
       {
         id: `cycle-demo-1-${Date.now()}`,
-        name: "Ciclo de teste — Forte",
+        name: `Protocolo #${baseN + 1}`,
         startDate: "2025-01-10",
         endDate: "2025-02-18",
         days: {},
@@ -116,7 +117,7 @@ export function useProtocol() {
       },
       {
         id: `cycle-demo-2-${Date.now() + 1}`,
-        name: "Ciclo de teste — Médio",
+        name: `Protocolo #${baseN + 2}`,
         startDate: "2024-11-01",
         endDate: "2024-12-10",
         days: {},
@@ -133,7 +134,7 @@ export function useProtocol() {
       },
       {
         id: `cycle-demo-3-${Date.now() + 2}`,
-        name: "Ciclo de teste — Fraco",
+        name: `Protocolo #${baseN + 3}`,
         startDate: "2024-08-15",
         endDate: "2024-09-08",
         days: {},
@@ -150,7 +151,7 @@ export function useProtocol() {
       },
       {
         id: `cycle-demo-4-${Date.now() + 3}`,
-        name: "Ciclo de teste — Abandonado",
+        name: `Protocolo #${baseN + 4}`,
         startDate: "2024-05-02",
         endDate: "2024-05-10",
         days: {},
