@@ -1,4 +1,4 @@
-import { Home, Flag, ClipboardList, Target, BookOpen } from "lucide-react";
+import { Home, Flag, ClipboardList, Target, BookOpen, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoIcon from "@/assets/logo-icon.png";
 import mountain from "@/assets/mountain.jpg";
@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { id: "jornada", label: "Jornada", icon: Flag },
   { id: "pendencias", label: "Pendências", icon: ClipboardList },
   { id: "meta", label: "Meta", icon: Target },
+  { id: "protocolos", label: "Protocolos", icon: Layers },
   { id: "protocolo", label: "Protocolo", icon: BookOpen },
 ];
 
@@ -89,7 +90,9 @@ export function AppSidebar({ active, onChange }: Props) {
                     </span>
                   )}
                 </button>
-                {idx === 4 && <div className="h-px bg-sidebar-border my-3 mx-2" />}
+                {idx === NAV_ITEMS.length - 1 && (
+                  <div className="h-px bg-sidebar-border my-3 mx-2" />
+                )}
               </li>
             );
           })}
