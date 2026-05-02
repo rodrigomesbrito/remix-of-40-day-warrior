@@ -67,6 +67,13 @@ export function useProtocol() {
     const next: ProtocolState = { startDate, days: {} };
     saveState(next);
     setState(next);
+    // Novo protocolo começa com pendências zeradas
+    try {
+      localStorage.removeItem("protocolo-40-pendencias");
+      window.dispatchEvent(new Event("pendencias:reset"));
+    } catch {
+      /* noop */
+    }
   }, []);
 
   const reset = useCallback(() => {

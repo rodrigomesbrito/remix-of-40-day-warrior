@@ -28,12 +28,27 @@ const CLASS_BADGE: Record<string, string> = {
 
 export function DailyCheckIn() {
   const { state, dayNumber, inRange, updateDay, reset } = useProtocol();
-  const [confirmed, setConfirmed] = useState(false);
+  const confirmedKey = `protocolo-40-confirmed-${state?.startDate ?? "none"}-${dayNumber}`;
+  const [confirmed, setConfirmedState] = useState(false);
 
-  // Reset confirmation when day changes
+  // Carrega estado de confirmação persistido para o dia atual
   useEffect(() => {
-    setConfirmed(false);
-  }, [dayNumber]);
+    try {
+      setConfirmedState(localStorage.getItem(confirmedKey) === "1");
+    } catch {
+      setConfirmedState(false);
+    }
+  }, [confirmedKey]);
+
+  const setConfirmed = (v: boolean) => {
+    setConfirmedState(v);
+    try {
+      if (v) localStorage.setItem(confirmedKey, "1");
+      else localStorage.removeItem(confirmedKey);
+    } catch {
+      /* noop */
+    }
+  };
 
   const day = useMemo(() => {
     if (!state || !inRange) return null;
