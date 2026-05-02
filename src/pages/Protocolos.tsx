@@ -24,6 +24,7 @@ import {
   ArrowLeft,
   CalendarDays,
   Play,
+  Sparkles,
   Trash2,
 } from "lucide-react";
 
@@ -33,8 +34,15 @@ function fmtBR(iso: string) {
 }
 
 export default function ProtocolosPage() {
-  const { state, archive, dayNumber, stats, start, archiveCurrent, removeArchived } =
-    useProtocol();
+  const {
+    state,
+    archive,
+    dayNumber,
+    start,
+    archiveCurrent,
+    removeArchived,
+    seedDemoArchive,
+  } = useProtocol();
 
   const [archiveOpen, setArchiveOpen] = useState(false);
   const [archiveName, setArchiveName] = useState("");
@@ -65,6 +73,10 @@ export default function ProtocolosPage() {
               <ArrowLeft className="h-4 w-4" />
               Voltar
             </Link>
+          </Button>
+          <Button variant="ghost" size="sm" onClick={seedDemoArchive}>
+            <Sparkles className="h-4 w-4" />
+            Adicionar exemplos
           </Button>
         </div>
 
