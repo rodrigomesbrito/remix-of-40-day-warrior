@@ -82,18 +82,6 @@ export function Pendencias() {
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="bg-card border border-border rounded-lg p-4 shadow-card">
-          <p className="text-display text-xs text-muted-foreground">Abertas</p>
-          <p className="text-display text-3xl font-bold text-primary">{abertas.length}</p>
-        </div>
-        <div className="bg-card border border-border rounded-lg p-4 shadow-card">
-          <p className="text-display text-xs text-muted-foreground">Fechadas</p>
-          <p className="text-display text-3xl font-bold text-[hsl(var(--success))]">{feitas.length}</p>
-        </div>
-      </div>
-
       {/* Abertas */}
       <section>
         <h3 className="text-display text-lg font-semibold mb-3">Abertas</h3>

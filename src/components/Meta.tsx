@@ -5,16 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PROTOCOL_LENGTH } from "@/lib/protocol";
-import { Pencil, CalendarDays, Hourglass, TrendingUp, AlertCircle } from "lucide-react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-} from "recharts";
+import { Pencil, AlertCircle } from "lucide-react";
 
 function fmtBRL(n: number) {
   return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
@@ -33,8 +24,6 @@ export function Meta() {
   const pct = Math.min(100, Math.round((meta.atual / Math.max(1, meta.alvo)) * 100));
   const dayShown = Math.min(PROTOCOL_LENGTH, Math.max(0, dayNumber));
   const restantes = Math.max(0, PROTOCOL_LENGTH - dayShown);
-  const pctCiclo = Math.round((dayShown / PROTOCOL_LENGTH) * 100);
-  const pctRestante = 100 - pctCiclo;
   const ritmoDia = Math.max(0, Math.ceil((meta.alvo - meta.atual) / Math.max(1, restantes || 1)));
 
   const startEdit = () => {
@@ -55,19 +44,9 @@ export function Meta() {
   const circ = 2 * Math.PI * r;
   const dash = (pct / 100) * circ;
 
-  // Evolution chart data
-  const steps = 6;
-  const chartData = Array.from({ length: steps }, (_, i) => {
-    const dia = Math.round((i / (steps - 1)) * PROTOCOL_LENGTH);
-    const ideal = Math.round((dia / PROTOCOL_LENGTH) * meta.alvo);
-    const realizado = dia <= dayShown ? meta.atual * (dia / Math.max(1, dayShown)) : null;
-    return { dia: `Dia ${dia}`, ideal, realizado };
-  });
-
   return (
     <div className="space-y-5">
-      {/* Top row: hero + 3 stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 gap-5">
         {/* Hero card */}
         <section className="bg-card border border-border rounded-xl p-6 shadow-card">
           <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-3">Meta Principal</p>
@@ -121,52 +100,6 @@ export function Meta() {
             </span>
           </div>
         </section>
-
-        {/* Right column: 3 stat cards + chart */}
-        <div className="flex flex-col gap-5">
-          <div className="grid grid-cols-3 gap-3">
-            <StatTop icon={CalendarDays} label="Dias Passados" value={`${dayShown}`} sub={`${pctCiclo}% do ciclo`} />
-            <StatTop icon={Hourglass} label="Dias Restantes" value={`${restantes}`} sub={`${pctRestante}% do ciclo`} />
-            <StatTop icon={TrendingUp} label="Ritmo Esperado" value={fmtBRL(ritmoDia)} sub="Para bater a meta" valueClass="text-base sm:text-lg" />
-          </div>
-
-          <section className="bg-card border border-border rounded-xl p-5 shadow-card flex-1">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Evolução da Meta</p>
-              <div className="flex items-center gap-4 text-[11px]">
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-block w-3 h-[2px] border-t-2 border-dashed border-primary" />
-                  <span className="text-muted-foreground">Projeção ideal</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-block w-3 h-[2px] bg-muted-foreground" />
-                  <span className="text-muted-foreground">Valor realizado</span>
-                </span>
-              </div>
-            </div>
-            <div className="h-[220px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                  <CartesianGrid stroke="hsl(var(--border))" strokeDasharray="2 4" vertical={false} />
-                  <XAxis dataKey="dia" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <YAxis
-                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
-                    axisLine={false}
-                    tickLine={false}
-                    tickFormatter={(v) => `R$ ${Number(v).toLocaleString("pt-BR")}`}
-                    width={70}
-                  />
-                  <Tooltip
-                    contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }}
-                    formatter={(v: any) => (v == null ? "—" : fmtBRL(Number(v)))}
-                  />
-                  <Line type="monotone" dataKey="ideal" stroke="hsl(var(--primary))" strokeWidth={2} strokeDasharray="6 4" dot={false} />
-                  <Line type="monotone" dataKey="realizado" stroke="hsl(var(--muted-foreground))" strokeWidth={2} dot={{ r: 3, fill: "hsl(var(--muted-foreground))" }} connectNulls={false} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </section>
-        </div>
       </div>
 
       {/* Edit section */}
@@ -207,31 +140,6 @@ export function Meta() {
           </Button>
         )}
       </section>
-    </div>
-  );
-}
-
-function StatTop({
-  icon: Icon,
-  label,
-  value,
-  sub,
-  valueClass,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  value: string;
-  sub: string;
-  valueClass?: string;
-}) {
-  return (
-    <div className="bg-card border border-border rounded-xl p-4 shadow-card flex flex-col">
-      <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-primary font-bold mb-2">
-        <Icon className="h-3 w-3" />
-        <span className="truncate">{label}</span>
-      </div>
-      <p className={`text-display font-bold leading-none ${valueClass ?? "text-3xl"}`}>{value}</p>
-      <p className="text-[11px] text-muted-foreground mt-2">{sub}</p>
     </div>
   );
 }
