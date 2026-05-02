@@ -8,10 +8,8 @@ import {
   type ArchivedProtocol,
 } from "@/lib/protocol";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -24,6 +22,7 @@ import {
   Archive,
   CalendarDays,
   ChevronRight,
+  Flame,
   LogOut,
   Plus,
   Sparkles,
@@ -37,9 +36,9 @@ function fmtBR(iso: string) {
 }
 
 function consistencyTone(p: number) {
-  if (p >= 0.8) return "text-emerald-400";
-  if (p >= 0.5) return "text-amber-400";
-  return "text-rose-400";
+  if (p >= 0.8) return { text: "text-success", ring: "border-success/40", label: "Forte" };
+  if (p >= 0.5) return { text: "text-accent", ring: "border-accent/40", label: "Médio" };
+  return { text: "text-primary", ring: "border-primary/40", label: "Fraco" };
 }
 
 export default function ProtocolosPage() {
@@ -54,7 +53,6 @@ export default function ProtocolosPage() {
     seedDemoArchive,
   } = useProtocol();
 
-  // O número do próximo protocolo é baseado em (arquivados + ativo)
   const nextNumber = useMemo(
     () => archive.length + (state ? 1 : 0) + 1,
     [archive.length, state],
@@ -95,153 +93,250 @@ export default function ProtocolosPage() {
     navigate("/auth", { replace: true });
   };
 
+  const totalCiclos = archive.length + (state ? 1 : 0);
+  const concluidos = archive.filter((a) => a.stats.diasDecorridos >= PROTOCOL_LENGTH).length;
+  const melhor = archive.reduce(
+    (max, a) => (a.stats.consistencia > max ? a.stats.consistencia : max),
+    0,
+  );
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-2xl mx-auto px-5 sm:px-8 py-10 space-y-10">
-        {/* Top bar — sair à direita, sem voltar */}
-        <div className="flex items-center justify-between">
-          <p className="text-display text-xs uppercase tracking-[0.25em] text-accent">
-            Centro de Protocolos
-          </p>
-          <Button variant="ghost" size="sm" onClick={handleLogout}>
-            <LogOut className="h-4 w-4" />
-            Sair
-          </Button>
-        </div>
-
-        {/* Header + CTA principal */}
-        <header className="space-y-5">
-          <div className="space-y-1">
-            <h1 className="text-display text-3xl sm:text-4xl font-bold">
-              Histórico
-            </h1>
-            <p className="text-muted-foreground text-sm">
-              Acompanhe seu protocolo ativo e revise os ciclos passados.
-            </p>
+    <div className="min-h-screen flex flex-col">
+      {/* Header no padrão do app (gradient blood) */}
+      <header
+        className="border-b border-border"
+        style={{
+          backgroundImage:
+            "linear-gradient(135deg, hsl(0 70% 32% / 0.18) 0%, hsl(0 0% 8% / 0) 70%)",
+        }}
+      >
+        <div className="max-w-5xl mx-auto px-5 sm:px-8 pt-6 pb-5">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <p className="text-primary text-xs font-bold uppercase tracking-widest mb-1">
+                Centro de Protocolos
+              </p>
+              <h1 className="text-display text-3xl sm:text-4xl font-bold leading-none">
+                Histórico
+              </h1>
+            </div>
+            <Button variant="ghost" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4" />
+              Sair
+            </Button>
           </div>
-          <Button onClick={openNew} disabled={!!state} className="w-full sm:w-auto">
-            <Plus className="h-4 w-4" />
-            Novo Protocolo
-          </Button>
-        </header>
+        </div>
+      </header>
 
-        {/* Em andamento — card clicável que leva ao dashboard */}
+      <main className="flex-1 max-w-5xl w-full mx-auto px-5 sm:px-8 py-8 space-y-8">
+        {/* CTA + KPIs no padrão Guerreiro */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {/* Card hero — Novo Protocolo */}
+          <div className="lg:col-span-1 bg-card border border-border rounded-xl p-6 shadow-card relative overflow-hidden">
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-60 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at top right, hsl(0 75% 30% / 0.35), transparent 60%)",
+              }}
+            />
+            <div className="relative">
+              <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-3">
+                Próximo ciclo
+              </p>
+              <h2 className="text-display text-2xl font-bold leading-tight">
+                40 Dias<br />de Base
+              </h2>
+              <p className="text-xs text-muted-foreground mt-3 mb-5">
+                Disciplina · Corpo · Mente · Produção
+              </p>
+              <Button
+                onClick={openNew}
+                disabled={!!state}
+                className="w-full bg-gradient-ember text-primary-foreground hover:opacity-90 font-bold uppercase tracking-wider text-xs"
+              >
+                <Plus className="h-4 w-4" />
+                Novo Protocolo
+              </Button>
+              {state && (
+                <p className="text-[11px] text-muted-foreground mt-2 text-center">
+                  Encerre o ativo para iniciar outro
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* KPIs */}
+          <div className="lg:col-span-2 grid grid-cols-3 gap-3">
+            <KpiCard label="Ciclos" value={totalCiclos} />
+            <KpiCard label="Concluídos" value={concluidos} />
+            <KpiCard
+              label="Melhor"
+              value={melhor > 0 ? `${Math.round(melhor * 100)}%` : "—"}
+            />
+          </div>
+        </section>
+
+        {/* Em andamento */}
         {state && (
           <section className="space-y-3">
-            <h2 className="text-display text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Em andamento
-            </h2>
+            <SectionLabel>Em andamento</SectionLabel>
 
-            <Card className="bg-card/60 hover:bg-card/80 transition-colors overflow-hidden">
-              <Link
-                to="/"
-                className="flex items-center gap-4 p-5 group"
-                aria-label={`Abrir Protocolo #${activeNumber}`}
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <Badge className="bg-primary/15 text-primary border-primary/30 hover:bg-primary/15">
-                      Ativo
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      40 Dias de Base
-                    </span>
+            <Link
+              to="/"
+              aria-label={`Abrir Protocolo #${activeNumber}`}
+              className="block group bg-card border border-border rounded-xl shadow-card overflow-hidden hover:border-primary/50 transition-colors"
+            >
+              <div className="flex items-stretch">
+                {/* faixa lateral primary */}
+                <div className="w-1 bg-primary shrink-0" />
+                <div className="flex-1 flex items-center gap-4 p-5">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-primary font-bold">
+                        <Flame className="h-3 w-3 fill-primary/40" />
+                        Ativo
+                      </span>
+                      <span className="text-xs text-muted-foreground">·</span>
+                      <span className="text-xs text-muted-foreground">40 Dias de Base</span>
+                    </div>
+                    <h3 className="text-display text-xl font-bold truncate">
+                      Protocolo #{activeNumber}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1 inline-flex items-center gap-1.5">
+                      <CalendarDays className="h-3 w-3" />
+                      Iniciado em {fmtBR(state.startDate)} · Dia{" "}
+                      <span className="text-foreground font-semibold tabular-nums">
+                        {Math.min(dayNumber, PROTOCOL_LENGTH)}/{PROTOCOL_LENGTH}
+                      </span>
+                    </p>
+                    {/* Progresso */}
+                    <div className="mt-3 h-1.5 bg-secondary rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-ember"
+                        style={{
+                          width: `${Math.min(100, (Math.min(dayNumber, PROTOCOL_LENGTH) / PROTOCOL_LENGTH) * 100)}%`,
+                        }}
+                      />
+                    </div>
                   </div>
-                  <h3 className="font-semibold truncate">Protocolo #{activeNumber}</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Iniciado em {fmtBR(state.startDate)} · Dia{" "}
-                    {Math.min(dayNumber, PROTOCOL_LENGTH)}/{PROTOCOL_LENGTH}
-                  </p>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
                 </div>
-                <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
-              </Link>
-              <div className="border-t border-border/60 px-5 py-2.5 flex justify-end">
+              </div>
+              <div className="border-t border-border px-5 py-2.5 flex justify-end bg-secondary/30">
                 <button
                   onClick={(e) => {
                     e.preventDefault();
                     setArchiveOpen(true);
                   }}
-                  className="text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5"
+                  className="text-[11px] uppercase tracking-widest font-bold text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
                 >
                   <Archive className="h-3.5 w-3.5" />
-                  Encerrar protocolo
+                  Encerrar
                 </button>
               </div>
-            </Card>
+            </Link>
           </section>
         )}
 
         {/* Arquivados */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-display text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            <SectionLabel>
               Arquivados
-              <span className="ml-2 normal-case tracking-normal text-muted-foreground/70">
+              <span className="ml-2 text-muted-foreground/70 normal-case tracking-normal font-normal">
                 ({archive.length})
               </span>
-            </h2>
+            </SectionLabel>
             {archive.length === 0 && (
               <button
                 onClick={seedDemoArchive}
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5"
+                className="text-[11px] uppercase tracking-widest font-bold text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5"
               >
                 <Sparkles className="h-3.5 w-3.5" />
-                Adicionar exemplos
+                Exemplos
               </button>
             )}
           </div>
 
           {archive.length === 0 ? (
-            <Card className="p-8 bg-card/40 border-dashed text-center">
-              <Archive className="h-6 w-6 text-muted-foreground/50 mx-auto mb-2" />
+            <div className="bg-card border border-dashed border-border rounded-xl p-10 text-center">
+              <Archive className="h-7 w-7 text-muted-foreground/40 mx-auto mb-3" />
               <p className="text-sm text-muted-foreground">
                 Quando você encerrar um protocolo, ele aparece aqui.
               </p>
-            </Card>
+            </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {archive.map((a) => {
                 const pct = Math.round(a.stats.consistencia * 100);
+                const tone = consistencyTone(a.stats.consistencia);
                 return (
-                  <Card
+                  <article
                     key={a.id}
-                    className="p-4 bg-card/60 flex items-center gap-4"
+                    className="bg-card border border-border rounded-xl shadow-card p-4 sm:p-5 flex items-center gap-4 hover:border-border/80 transition-colors"
                   >
+                    {/* selo de consistência */}
+                    <div
+                      className={`shrink-0 h-14 w-14 rounded-full border-2 ${tone.ring} flex flex-col items-center justify-center`}
+                    >
+                      <span className={`text-display text-sm font-bold tabular-nums ${tone.text}`}>
+                        {pct}%
+                      </span>
+                    </div>
+
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-medium truncate">{a.name}</h3>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-display text-base font-bold truncate">
+                          {a.name}
+                        </h3>
+                        <span
+                          className={`text-[10px] uppercase tracking-widest font-bold ${tone.text}`}
+                        >
+                          {tone.label}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground inline-flex items-center gap-1.5 mt-1">
                         <CalendarDays className="h-3 w-3" />
                         {fmtBR(a.startDate)} → {fmtBR(a.endDate)}
+                        <span className="mx-1 opacity-50">·</span>
+                        {a.stats.diasDecorridos} dias
                       </p>
+                      {/* mini stats */}
+                      <div className="flex items-center gap-3 mt-2 text-[11px]">
+                        <span className="text-success font-semibold tabular-nums">
+                          {a.stats.fortes} fortes
+                        </span>
+                        <span className="text-accent font-semibold tabular-nums">
+                          {a.stats.minimos} mínimos
+                        </span>
+                        <span className="text-primary font-semibold tabular-nums">
+                          {a.stats.perdidos} perdidos
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-right shrink-0">
-                      <p className={`text-lg font-semibold tabular-nums ${consistencyTone(a.stats.consistencia)}`}>
-                        {pct}%
-                      </p>
-                      <p className="text-[10px] uppercase tracking-wider text-muted-foreground/70">
-                        consistência
-                      </p>
-                    </div>
+
                     <button
                       onClick={() => setConfirmDelete(a)}
                       aria-label="Remover do histórico"
-                      className="text-muted-foreground/60 hover:text-destructive transition-colors p-1 shrink-0"
+                      className="text-muted-foreground/50 hover:text-destructive transition-colors p-2 shrink-0"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
-                  </Card>
+                  </article>
                 );
               })}
             </div>
           )}
         </section>
-      </div>
+      </main>
 
       {/* Modal: Novo Protocolo (rápido, 1 tela) */}
       <Dialog open={newOpen} onOpenChange={setNewOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Novo protocolo</DialogTitle>
+            <DialogTitle className="text-display">Novo Protocolo</DialogTitle>
             <DialogDescription>
               40 Dias de Base · disciplina, corpo, mente e produção.
             </DialogDescription>
@@ -289,7 +384,9 @@ export default function ProtocolosPage() {
       <Dialog open={archiveOpen} onOpenChange={setArchiveOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Encerrar Protocolo #{activeNumber}?</DialogTitle>
+            <DialogTitle className="text-display">
+              Encerrar Protocolo #{activeNumber}?
+            </DialogTitle>
             <DialogDescription>
               Ele será movido para o histórico. Esta ação não pode ser desfeita.
             </DialogDescription>
@@ -310,7 +407,7 @@ export default function ProtocolosPage() {
       <Dialog open={!!confirmDelete} onOpenChange={(o) => !o && setConfirmDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remover do histórico?</DialogTitle>
+            <DialogTitle className="text-display">Remover do histórico?</DialogTitle>
             <DialogDescription>
               Esta ação remove "{confirmDelete?.name}" permanentemente.
             </DialogDescription>
@@ -332,6 +429,27 @@ export default function ProtocolosPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+    </div>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="text-[10px] uppercase tracking-widest text-foreground/60 font-bold">
+      {children}
+    </h2>
+  );
+}
+
+function KpiCard({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="bg-card border border-border rounded-xl p-4 shadow-card flex flex-col justify-between">
+      <p className="text-[10px] uppercase tracking-widest text-foreground/60 font-bold">
+        {label}
+      </p>
+      <p className="text-display text-2xl sm:text-3xl font-bold mt-2 tabular-nums">
+        {value}
+      </p>
     </div>
   );
 }
