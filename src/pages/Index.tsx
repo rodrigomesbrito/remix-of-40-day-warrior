@@ -7,6 +7,7 @@ import { Journey } from "@/components/Journey";
 import { ProtocolReference } from "@/components/ProtocolReference";
 import { Pendencias } from "@/components/Pendencias";
 import { Meta } from "@/components/Meta";
+import { Protocolos } from "@/components/Protocolos";
 import { AppSidebar } from "@/components/AppSidebar";
 import { HojeSideRail } from "@/components/HojeSideRail";
 
@@ -30,6 +31,7 @@ const Index = () => {
             {tab === "jornada" && <Journey />}
             {tab === "pendencias" && <Pendencias />}
             {tab === "meta" && <Meta />}
+            {tab === "protocolos" && <Protocolos />}
             {tab === "protocolo" && <ProtocolReference />}
           </main>
 
