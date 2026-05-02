@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PROTOCOL_LENGTH } from "@/lib/protocol";
-import { Pencil, AlertCircle } from "lucide-react";
+import { Pencil, AlertCircle, Gift } from "lucide-react";
 
 function fmtBRL(n: number) {
   return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
@@ -18,6 +18,7 @@ export function Meta() {
   const [draftAlvo, setDraftAlvo] = useState(meta.alvo);
   const [draftAtual, setDraftAtual] = useState(meta.atual);
   const [draftDesc, setDraftDesc] = useState(meta.descricao);
+  const [draftRecompensa, setDraftRecompensa] = useState(meta.recompensa);
 
   if (!ready || !stats) return null;
 
@@ -30,10 +31,16 @@ export function Meta() {
     setDraftAlvo(meta.alvo);
     setDraftAtual(meta.atual);
     setDraftDesc(meta.descricao);
+    setDraftRecompensa(meta.recompensa);
     setEditing(true);
   };
   const save = () => {
-    update({ alvo: Number(draftAlvo) || 0, atual: Number(draftAtual) || 0, descricao: draftDesc });
+    update({
+      alvo: Number(draftAlvo) || 0,
+      atual: Number(draftAtual) || 0,
+      descricao: draftDesc,
+      recompensa: draftRecompensa,
+    });
     setEditing(false);
   };
 
@@ -99,6 +106,24 @@ export function Meta() {
               Você precisa gerar em média <strong className="text-foreground">{fmtBRL(ritmoDia)}</strong> por dia para alcançar sua meta.
             </span>
           </div>
+
+          {meta.recompensa.trim() && (
+            <div className="mt-4 pt-4 border-t border-border">
+              <div className="flex items-start gap-3">
+                <span className="h-9 w-9 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center shrink-0">
+                  <Gift className="h-4 w-4 text-primary" strokeWidth={2.5} />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">
+                    Recompensa
+                  </p>
+                  <p className="text-display text-lg font-bold leading-tight">
+                    {meta.recompensa}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
       </div>
 
@@ -109,6 +134,14 @@ export function Meta() {
             <div>
               <Label className="text-display text-xs">Descrição</Label>
               <Input value={draftDesc} onChange={(e) => setDraftDesc(e.target.value)} />
+            </div>
+            <div>
+              <Label className="text-display text-xs">Recompensa ao bater a meta</Label>
+              <Input
+                value={draftRecompensa}
+                onChange={(e) => setDraftRecompensa(e.target.value)}
+                placeholder="Ex: viagem, celular novo, jantar especial..."
+              />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
