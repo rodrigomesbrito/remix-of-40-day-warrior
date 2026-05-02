@@ -70,6 +70,7 @@ export function useProtocol() {
     // Novo protocolo começa com pendências zeradas
     try {
       localStorage.removeItem("protocolo-40-pendencias");
+      window.dispatchEvent(new Event("pendencias:reset"));
     } catch {
       /* noop */
     }
