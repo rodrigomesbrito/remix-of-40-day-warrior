@@ -90,7 +90,9 @@ export function AppSidebar({ active, onChange }: Props) {
                     </span>
                   )}
                 </button>
-                {idx === 4 && <div className="h-px bg-sidebar-border my-3 mx-2" />}
+                {idx === NAV_ITEMS.length - 1 && (
+                  <div className="h-px bg-sidebar-border my-3 mx-2" />
+                )}
               </li>
             );
           })}
