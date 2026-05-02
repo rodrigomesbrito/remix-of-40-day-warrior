@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { CheckCard } from "./CheckCard";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -7,7 +7,7 @@ import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { CheckCircle2, Lightbulb, DollarSign, Dumbbell, Brain, Zap, Moon, XCircle, Circle, type LucideIcon } from "lucide-react";
+import { CheckCircle2, Bell, DollarSign, Dumbbell, Brain, Zap, Moon, XCircle, Circle, Pencil, type LucideIcon } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string; Icon: LucideIcon }> = {
   forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]", Icon: Zap },
@@ -28,6 +28,12 @@ const CLASS_BADGE: Record<string, string> = {
 
 export function DailyCheckIn() {
   const { state, dayNumber, inRange, updateDay, reset } = useProtocol();
+  const [confirmed, setConfirmed] = useState(false);
+
+  // Reset confirmation when day changes
+  useEffect(() => {
+    setConfirmed(false);
+  }, [dayNumber]);
 
   const day = useMemo(() => {
     if (!state || !inRange) return null;
@@ -39,7 +45,7 @@ export function DailyCheckIn() {
   if (!inRange) {
     const finished = dayNumber > PROTOCOL_LENGTH;
     return (
-      <div className="bg-card border border-border rounded-lg p-8 text-center shadow-card">
+      <div className="max-w-2xl mx-auto bg-card border border-border rounded-lg p-8 text-center shadow-card">
         <h2 className="text-display text-3xl font-bold mb-3">
           {finished ? "Protocolo concluído" : "Aguardando início"}
         </h2>
@@ -69,7 +75,36 @@ export function DailyCheckIn() {
     weekday: "long", day: "2-digit", month: "long",
   });
 
+  const CONFIRMED_MESSAGES: Record<string, { title: string; subtitle: string; tone: string }> = {
+    forte: {
+      title: "Dia Forte conquistado.",
+      subtitle: "Produção, corpo e mente alinhados. É assim que se constrói.",
+      tone: "text-[hsl(var(--success))]",
+    },
+    minimo: {
+      title: "Dia Mínimo cumprido.",
+      subtitle: "Você manteve a corrente. Amanhã, eleve o nível.",
+      tone: "text-accent",
+    },
+    perdido: {
+      title: "Dia perdido.",
+      subtitle: "Sem produção, não há avanço. Reset mental: amanhã você vence.",
+      tone: "text-[hsl(0_85%_65%)]",
+    },
+  };
+
+  const handleConfirm = () => {
+    setConfirmed(true);
+    const msg = isPristine ? CONFIRMED_MESSAGES.perdido : CONFIRMED_MESSAGES[preview];
+    toast.success(`Dia ${dayNumber} salvo`, { description: msg.title });
+  };
+
+  const finalStatus = isPristine ? "perdido" : preview;
+  const finalMsg = CONFIRMED_MESSAGES[finalStatus];
+  const FinalIcon = isPristine ? XCircle : meta.Icon;
+
   return (
+    <div className="max-w-2xl mx-auto space-y-5">
     <div className="bg-card/40 border border-border rounded-xl p-6 sm:p-8 space-y-6 shadow-card">
       <div className="flex items-start justify-between">
         <div>
@@ -83,16 +118,48 @@ export function DailyCheckIn() {
         <span
           className={cn(
             "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-extrabold uppercase tracking-wider transition-colors",
-            badgeClass,
+            confirmed ? CLASS_BADGE[finalStatus] : badgeClass,
           )}
         >
           <StatusIcon className="h-3.5 w-3.5" strokeWidth={2.5} />
-          {statusLabel}
+          {confirmed ? CLASS_LABEL[finalStatus].label : statusLabel}
         </span>
       </div>
 
       <div className="border-t border-border" />
 
+      {confirmed ? (
+        <div className="py-8 text-center space-y-5 animate-fade-in">
+          <div
+            className={cn(
+              "mx-auto h-20 w-20 rounded-full flex items-center justify-center",
+              finalStatus === "forte" && "bg-[hsl(var(--success)/0.15)]",
+              finalStatus === "minimo" && "bg-[hsl(var(--accent)/0.15)]",
+              finalStatus === "perdido" && "bg-[hsl(0_75%_45%/0.15)]",
+            )}
+          >
+            <FinalIcon className={cn("h-10 w-10", finalMsg.tone)} strokeWidth={2.25} />
+          </div>
+          <div className="space-y-2">
+            <h3 className={cn("text-display text-2xl font-bold", finalMsg.tone)}>
+              {finalMsg.title}
+            </h3>
+            <p className="text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
+              {finalMsg.subtitle}
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setConfirmed(false)}
+            className="mt-2"
+          >
+            <Pencil className="h-3.5 w-3.5 mr-2" />
+            Editar dia
+          </Button>
+        </div>
+      ) : (
+        <>
       <div
         className={cn(
           "flex items-center justify-between gap-4 border rounded-xl px-4 py-3 transition-colors",
@@ -162,22 +229,35 @@ export function DailyCheckIn() {
       <div className="space-y-2">
         <Button
           size="lg"
-          onClick={() =>
-            toast.success(`Dia ${dayNumber} salvo`, {
-              description: isPristine ? "Dia perdido — sem produção." : meta.label,
-            })
-          }
+          onClick={handleConfirm}
           className="w-full h-14 text-base text-display tracking-wider shadow-deep"
         >
           <CheckCircle2 className="!h-6 !w-6 mr-2" strokeWidth={2.25} />
           Confirmar Dia
         </Button>
       </div>
+        </>
+      )}
+    </div>
 
-      <p className="text-center text-xs text-muted-foreground inline-flex items-center justify-center gap-1.5 w-full">
-        <Lightbulb className="h-3.5 w-3.5 text-accent" />
-        <span><strong>Dica:</strong> Foque no mínimo com excelência todos os dias.</span>
-      </p>
+      {/* LEMBRETE */}
+      <div className="relative bg-card/60 border border-border rounded-xl p-5 overflow-hidden">
+        <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary" />
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-2">
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-foreground">
+              Lembrete
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              O que você faz todos os dias, define quem você se torna.
+            </p>
+            <p className="text-sm font-extrabold text-primary">
+              Não quebre a corrente.
+            </p>
+          </div>
+          <Bell className="h-5 w-5 text-primary shrink-0 mt-0.5" strokeWidth={2.25} />
+        </div>
+      </div>
     </div>
   );
 }
