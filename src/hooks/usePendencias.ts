@@ -34,6 +34,9 @@ export function usePendencias() {
   useEffect(() => {
     setItems(load());
     setReady(true);
+    const onReset = () => setItems([]);
+    window.addEventListener("pendencias:reset", onReset);
+    return () => window.removeEventListener("pendencias:reset", onReset);
   }, []);
 
   const persist = useCallback((next: Pendencia[]) => {
