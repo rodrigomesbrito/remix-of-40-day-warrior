@@ -7,7 +7,7 @@ import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { CheckCircle2, Bell, DollarSign, Dumbbell, Brain, Zap, Moon, XCircle, Circle, Check, type LucideIcon } from "lucide-react";
+import { CheckCircle2, DollarSign, Dumbbell, Brain, Zap, Moon, XCircle, Circle, Check, X, type LucideIcon } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string; Icon: LucideIcon }> = {
   forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]", Icon: Zap },
@@ -144,29 +144,33 @@ export function DailyCheckIn() {
       <div className="border-t border-border" />
 
       {confirmed ? (
-        <div className="py-6 text-center space-y-6 animate-fade-in">
-          {/* Ícone com glow */}
-          <div className="relative mx-auto w-24 h-24 flex items-center justify-center">
+        <div className="py-8 text-center space-y-6 animate-fade-in">
+          {/* Ícone com halo radial suave */}
+          <div className="relative mx-auto w-32 h-32 flex items-center justify-center">
             <div
-              className={cn(
-                "absolute inset-0 rounded-full blur-2xl opacity-60",
-                finalStatus === "forte" && "bg-[hsl(var(--success))]",
-                finalStatus === "minimo" && "bg-accent",
-                finalStatus === "perdido" && "bg-destructive",
-              )}
+              aria-hidden
+              className="absolute inset-0 rounded-full"
+              style={{
+                background:
+                  finalStatus === "forte"
+                    ? "radial-gradient(circle, hsl(var(--success) / 0.35) 0%, transparent 65%)"
+                    : finalStatus === "minimo"
+                    ? "radial-gradient(circle, hsl(var(--accent) / 0.35) 0%, transparent 65%)"
+                    : "radial-gradient(circle, hsl(var(--destructive) / 0.35) 0%, transparent 65%)",
+              }}
             />
             <div
               className={cn(
-                "relative h-20 w-20 rounded-full border-2 flex items-center justify-center bg-background/80 backdrop-blur-sm",
-                finalStatus === "forte" && "border-[hsl(var(--success))] shadow-[0_0_30px_hsl(var(--success)/0.5)]",
-                finalStatus === "minimo" && "border-accent shadow-[0_0_30px_hsl(var(--accent)/0.5)]",
-                finalStatus === "perdido" && "border-destructive shadow-[0_0_30px_hsl(var(--destructive)/0.5)]",
+                "relative h-20 w-20 rounded-full border flex items-center justify-center bg-background",
+                finalStatus === "forte" && "border-[hsl(var(--success))]",
+                finalStatus === "minimo" && "border-accent",
+                finalStatus === "perdido" && "border-destructive",
               )}
             >
               {finalStatus === "perdido" ? (
-                <XCircle className={cn("h-10 w-10", finalMsg.tone)} strokeWidth={2.5} />
+                <X className={cn("h-9 w-9", finalMsg.tone)} strokeWidth={2.5} />
               ) : (
-                <Check className={cn("h-10 w-10", finalMsg.tone)} strokeWidth={3} />
+                <Check className={cn("h-9 w-9", finalMsg.tone)} strokeWidth={2.5} />
               )}
             </div>
           </div>
@@ -188,15 +192,6 @@ export function DailyCheckIn() {
             </h3>
             <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
               {finalMsg.subtitle}
-            </p>
-          </div>
-
-          {/* Citação do lembrete */}
-          <div className="mx-auto max-w-md bg-muted/30 border border-border rounded-lg px-5 py-4">
-            <p className="text-sm text-muted-foreground italic leading-relaxed">
-              <span className="text-[hsl(var(--success))] mr-1 not-italic">“</span>
-              O que você faz todos os dias, define quem você se torna.
-              <span className="text-[hsl(var(--success))] ml-1 not-italic">”</span>
             </p>
           </div>
 
@@ -289,25 +284,6 @@ export function DailyCheckIn() {
         </>
       )}
     </div>
-
-      {/* LEMBRETE */}
-      <div className="relative bg-card/60 border border-border rounded-xl p-5 overflow-hidden">
-        <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary" />
-        <div className="flex items-start justify-between gap-3">
-          <div className="space-y-2">
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-foreground">
-              Lembrete
-            </p>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              O que você faz todos os dias, define quem você se torna.
-            </p>
-            <p className="text-sm font-extrabold text-primary">
-              Não quebre a corrente.
-            </p>
-          </div>
-          <Bell className="h-5 w-5 text-primary shrink-0 mt-0.5" strokeWidth={2.25} />
-        </div>
-      </div>
     </div>
   );
 }
