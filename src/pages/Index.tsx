@@ -8,7 +8,6 @@ import { ProtocolReference } from "@/components/ProtocolReference";
 import { Pendencias } from "@/components/Pendencias";
 import { Meta } from "@/components/Meta";
 import { AppSidebar } from "@/components/AppSidebar";
-import { HojeSideRail } from "@/components/HojeSideRail";
 
 const Index = () => {
   const { ready, state, start } = useProtocol();
@@ -32,12 +31,6 @@ const Index = () => {
             {tab === "meta" && <Meta />}
             {tab === "protocolo" && <ProtocolReference />}
           </main>
-
-          {tab === "hoje" && (
-            <div className="px-4 py-6 pr-6">
-              <HojeSideRail />
-            </div>
-          )}
         </div>
       </div>
     </div>
