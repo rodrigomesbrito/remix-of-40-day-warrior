@@ -25,7 +25,6 @@ import {
   Flame,
   LogOut,
   Plus,
-  Sparkles,
   Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -33,12 +32,6 @@ import { toast } from "sonner";
 function fmtBR(iso: string) {
   const [y, m, d] = iso.split("-");
   return `${d}/${m}/${y.slice(2)}`;
-}
-
-function consistencyTone(p: number) {
-  if (p >= 0.8) return { text: "text-success", ring: "border-success/40", label: "Forte" };
-  if (p >= 0.5) return { text: "text-accent", ring: "border-accent/40", label: "Médio" };
-  return { text: "text-primary", ring: "border-primary/40", label: "Fraco" };
 }
 
 export default function ProtocolosPage() {
@@ -50,7 +43,6 @@ export default function ProtocolosPage() {
     start,
     archiveCurrent,
     removeArchived,
-    seedDemoArchive,
   } = useProtocol();
 
   const nextNumber = useMemo(
@@ -198,23 +190,12 @@ export default function ProtocolosPage() {
 
         {/* Arquivados */}
         <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <SectionLabel>
-              Arquivados
-              <span className="ml-2 text-muted-foreground/70 normal-case tracking-normal font-normal">
-                ({archive.length})
-              </span>
-            </SectionLabel>
-            {archive.length === 0 && (
-              <button
-                onClick={seedDemoArchive}
-                className="text-[11px] uppercase tracking-widest font-bold text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                Exemplos
-              </button>
-            )}
-          </div>
+          <SectionLabel>
+            Arquivados
+            <span className="ml-2 text-muted-foreground/70 normal-case tracking-normal font-normal">
+              ({archive.length})
+            </span>
+          </SectionLabel>
 
           {archive.length === 0 ? (
             <div className="bg-card border border-dashed border-border rounded-xl p-10 text-center">
@@ -226,51 +207,21 @@ export default function ProtocolosPage() {
           ) : (
             <div className="space-y-2.5">
               {archive.map((a) => {
-                const pct = Math.round(a.stats.consistencia * 100);
-                const tone = consistencyTone(a.stats.consistencia);
                 return (
                   <article
                     key={a.id}
                     className="bg-card border border-border rounded-xl shadow-card p-4 sm:p-5 flex items-center gap-4 hover:border-border/80 transition-colors"
                   >
-                    {/* selo de consistência */}
-                    <div
-                      className={`shrink-0 h-14 w-14 rounded-full border-2 ${tone.ring} flex flex-col items-center justify-center`}
-                    >
-                      <span className={`text-display text-sm font-bold tabular-nums ${tone.text}`}>
-                        {pct}%
-                      </span>
-                    </div>
-
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="text-display text-base font-bold truncate">
-                          {a.name}
-                        </h3>
-                        <span
-                          className={`text-[10px] uppercase tracking-widest font-bold ${tone.text}`}
-                        >
-                          {tone.label}
-                        </span>
-                      </div>
+                      <h3 className="text-display text-base font-bold truncate">
+                        {a.name}
+                      </h3>
                       <p className="text-xs text-muted-foreground inline-flex items-center gap-1.5 mt-1">
                         <CalendarDays className="h-3 w-3" />
                         {fmtBR(a.startDate)} → {fmtBR(a.endDate)}
                         <span className="mx-1 opacity-50">·</span>
                         {a.stats.diasDecorridos} dias
                       </p>
-                      {/* mini stats */}
-                      <div className="flex items-center gap-3 mt-2 text-[11px]">
-                        <span className="text-success font-semibold tabular-nums">
-                          {a.stats.fortes} fortes
-                        </span>
-                        <span className="text-accent font-semibold tabular-nums">
-                          {a.stats.minimos} mínimos
-                        </span>
-                        <span className="text-primary font-semibold tabular-nums">
-                          {a.stats.perdidos} perdidos
-                        </span>
-                      </div>
                     </div>
 
                     <button
