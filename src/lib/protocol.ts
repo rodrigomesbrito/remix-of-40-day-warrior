@@ -37,45 +37,6 @@ export interface ArchivedProtocol {
   archivedAt: string;
 }
 
-export interface ProtocolTemplate {
-  id: string;
-  name: string;
-  duration: number;
-  tagline: string;
-  description: string;
-  status: "available" | "current" | "soon";
-}
-
-export const PROTOCOL_LIBRARY: ProtocolTemplate[] = [
-  {
-    id: "base-40",
-    name: "40 Dias de Base",
-    duration: 40,
-    tagline: "Disciplina • Corpo • Mente • Produção",
-    description:
-      "O protocolo fundador. Reconstrução de hábitos pelos 4 pilares com regra de ouro na Produção.",
-    status: "current",
-  },
-  {
-    id: "foco-21",
-    name: "21 Dias de Foco Profundo",
-    duration: 21,
-    tagline: "Deep work • sem distrações",
-    description:
-      "Sprint curto para travar uma meta única de execução: 3h de deep work por dia, sem dispersão.",
-    status: "soon",
-  },
-  {
-    id: "corpo-30",
-    name: "30 Dias de Corpo",
-    duration: 30,
-    tagline: "Movimento diário inegociável",
-    description:
-      "Treino + alimentação + sono. Foco em recuperar base física antes de qualquer outro ciclo.",
-    status: "soon",
-  },
-];
-
 export function todayISO(): string {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
