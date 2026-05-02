@@ -145,34 +145,25 @@ export function DailyCheckIn() {
 
       {confirmed ? (
         <div className="py-8 text-center space-y-6 animate-fade-in">
-          {/* Ícone com halo radial suave */}
-          <div className="relative mx-auto w-32 h-32 flex items-center justify-center">
+          {/* Ícone minimalista com halo sutil */}
+          <div className="relative mx-auto w-28 h-28 flex items-center justify-center">
             <div
               aria-hidden
-              className="absolute inset-0 rounded-full"
+              className="absolute inset-0 rounded-full opacity-50"
               style={{
                 background:
                   finalStatus === "forte"
-                    ? "radial-gradient(circle, hsl(var(--success) / 0.35) 0%, transparent 65%)"
+                    ? "radial-gradient(circle, hsl(var(--success) / 0.25) 0%, transparent 70%)"
                     : finalStatus === "minimo"
-                    ? "radial-gradient(circle, hsl(var(--accent) / 0.35) 0%, transparent 65%)"
-                    : "radial-gradient(circle, hsl(var(--destructive) / 0.35) 0%, transparent 65%)",
+                    ? "radial-gradient(circle, hsl(var(--accent) / 0.25) 0%, transparent 70%)"
+                    : "radial-gradient(circle, hsl(var(--destructive) / 0.25) 0%, transparent 70%)",
               }}
             />
-            <div
-              className={cn(
-                "relative h-20 w-20 rounded-full border flex items-center justify-center bg-background",
-                finalStatus === "forte" && "border-[hsl(var(--success))]",
-                finalStatus === "minimo" && "border-accent",
-                finalStatus === "perdido" && "border-destructive",
-              )}
-            >
-              {finalStatus === "perdido" ? (
-                <X className={cn("h-9 w-9", finalMsg.tone)} strokeWidth={2.5} />
-              ) : (
-                <Check className={cn("h-9 w-9", finalMsg.tone)} strokeWidth={2.5} />
-              )}
-            </div>
+            {finalStatus === "perdido" ? (
+              <X className={cn("relative h-16 w-16", finalMsg.tone)} strokeWidth={2.25} />
+            ) : (
+              <Check className={cn("relative h-16 w-16", finalMsg.tone)} strokeWidth={2.25} />
+            )}
           </div>
 
           {/* Eyebrow */}
