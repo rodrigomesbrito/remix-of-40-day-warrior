@@ -93,13 +93,6 @@ export default function ProtocolosPage() {
     navigate("/auth", { replace: true });
   };
 
-  const totalCiclos = archive.length + (state ? 1 : 0);
-  const concluidos = archive.filter((a) => a.stats.diasDecorridos >= PROTOCOL_LENGTH).length;
-  const melhor = archive.reduce(
-    (max, a) => (a.stats.consistencia > max ? a.stats.consistencia : max),
-    0,
-  );
-
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header no padrão do app (gradient blood) */}
@@ -129,53 +122,16 @@ export default function ProtocolosPage() {
       </header>
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-5 sm:px-8 py-8 space-y-8">
-        {/* CTA + KPIs no padrão Guerreiro */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          {/* Card hero — Novo Protocolo */}
-          <div className="lg:col-span-1 bg-card border border-border rounded-xl p-6 shadow-card relative overflow-hidden">
-            <div
-              aria-hidden
-              className="absolute inset-0 opacity-60 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse at top right, hsl(0 75% 30% / 0.35), transparent 60%)",
-              }}
-            />
-            <div className="relative">
-              <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-3">
-                Próximo ciclo
-              </p>
-              <h2 className="text-display text-2xl font-bold leading-tight">
-                40 Dias<br />de Base
-              </h2>
-              <p className="text-xs text-muted-foreground mt-3 mb-5">
-                Disciplina · Corpo · Mente · Produção
-              </p>
-              <Button
-                onClick={openNew}
-                disabled={!!state}
-                className="w-full bg-gradient-ember text-primary-foreground hover:opacity-90 font-bold uppercase tracking-wider text-xs"
-              >
-                <Plus className="h-4 w-4" />
-                Novo Protocolo
-              </Button>
-              {state && (
-                <p className="text-[11px] text-muted-foreground mt-2 text-center">
-                  Encerre o ativo para iniciar outro
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* KPIs */}
-          <div className="lg:col-span-2 grid grid-cols-3 gap-3">
-            <KpiCard label="Ciclos" value={totalCiclos} />
-            <KpiCard label="Concluídos" value={concluidos} />
-            <KpiCard
-              label="Melhor"
-              value={melhor > 0 ? `${Math.round(melhor * 100)}%` : "—"}
-            />
-          </div>
+        {/* CTA: Novo Protocolo */}
+        <section className="flex justify-end">
+          <Button
+            onClick={openNew}
+            disabled={!!state}
+            className="bg-gradient-ember text-primary-foreground hover:opacity-90 font-bold uppercase tracking-wider text-xs"
+          >
+            <Plus className="h-4 w-4" />
+            Novo Protocolo
+          </Button>
         </section>
 
         {/* Em andamento */}
