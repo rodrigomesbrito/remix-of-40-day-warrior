@@ -50,6 +50,14 @@ export function useProtocol() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    // Limpeza única: remove protocolos de teste/seed criados anteriormente
+    const CLEAR_FLAG = "protocolo-40-cleared-v1";
+    if (!localStorage.getItem(CLEAR_FLAG)) {
+      const arch = loadArchive();
+      const cleaned = arch.filter((a) => !a.id.startsWith("cycle-demo-"));
+      if (cleaned.length !== arch.length) saveArchive(cleaned);
+      localStorage.setItem(CLEAR_FLAG, "1");
+    }
     setState(loadState());
     setArchive(loadArchive());
     setReady(true);
