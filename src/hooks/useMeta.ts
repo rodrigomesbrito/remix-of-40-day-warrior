@@ -6,12 +6,14 @@ export interface MetaState {
   alvo: number; // R$
   atual: number; // R$
   descricao: string;
+  recompensa: string;
 }
 
 const DEFAULT_META: MetaState = {
   alvo: 15000,
   atual: 0,
   descricao: "Gerar R$15.000 em 40 dias",
+  recompensa: "",
 };
 
 function load(): MetaState {
