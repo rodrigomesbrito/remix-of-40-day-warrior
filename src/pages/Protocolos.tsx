@@ -397,15 +397,3 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function KpiCard({ label, value }: { label: string; value: string | number }) {
-  return (
-    <div className="bg-card border border-border rounded-xl p-4 shadow-card flex flex-col justify-between">
-      <p className="text-[10px] uppercase tracking-widest text-foreground/60 font-bold">
-        {label}
-      </p>
-      <p className="text-display text-2xl sm:text-3xl font-bold mt-2 tabular-nums">
-        {value}
-      </p>
-    </div>
-  );
-}
