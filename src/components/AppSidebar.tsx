@@ -1,5 +1,6 @@
 import { Home, Flag, ClipboardList, Target, BookOpen, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 import logoIcon from "@/assets/logo-icon.png";
 import mountain from "@/assets/mountain.jpg";
 import { usePendencias } from "@/hooks/usePendencias";
@@ -14,7 +15,6 @@ const NAV_ITEMS = [
   { id: "jornada", label: "Jornada", icon: Flag },
   { id: "pendencias", label: "Pendências", icon: ClipboardList },
   { id: "meta", label: "Meta", icon: Target },
-  { id: "protocolos", label: "Protocolos", icon: Layers },
   { id: "protocolo", label: "Protocolo", icon: BookOpen },
 ];
 
@@ -97,6 +97,17 @@ export function AppSidebar({ active, onChange }: Props) {
             );
           })}
         </ul>
+
+        {/* Link externo para a tela de Protocolos */}
+        <div className="mt-3 px-2">
+          <Link
+            to="/protocolos"
+            className="flex items-center gap-3 pl-3 pr-3 py-3 rounded-md text-[13px] font-medium text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors"
+          >
+            <Layers strokeWidth={1.75} className="h-[18px] w-[18px] shrink-0 text-sidebar-foreground/70" />
+            <span className="flex-1 text-left">Protocolos</span>
+          </Link>
+        </div>
       </nav>
 
       {/* Mountain w/ overlaid quote (top) */}
