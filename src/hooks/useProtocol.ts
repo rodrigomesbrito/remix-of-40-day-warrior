@@ -95,6 +95,82 @@ export function useProtocol() {
     });
   }, []);
 
+  const seedDemoArchive = useCallback(() => {
+    const samples: ArchivedProtocol[] = [
+      {
+        id: `cycle-demo-1-${Date.now()}`,
+        name: "Ciclo de teste — Forte",
+        startDate: "2025-01-10",
+        endDate: "2025-02-18",
+        days: {},
+        stats: {
+          fortes: 32,
+          minimos: 6,
+          perdidos: 2,
+          registrados: 40,
+          consistencia: 0.95,
+          streak: 18,
+          diasDecorridos: 40,
+        },
+        archivedAt: new Date().toISOString(),
+      },
+      {
+        id: `cycle-demo-2-${Date.now() + 1}`,
+        name: "Ciclo de teste — Médio",
+        startDate: "2024-11-01",
+        endDate: "2024-12-10",
+        days: {},
+        stats: {
+          fortes: 14,
+          minimos: 14,
+          perdidos: 12,
+          registrados: 40,
+          consistencia: 0.7,
+          streak: 6,
+          diasDecorridos: 40,
+        },
+        archivedAt: new Date().toISOString(),
+      },
+      {
+        id: `cycle-demo-3-${Date.now() + 2}`,
+        name: "Ciclo de teste — Fraco",
+        startDate: "2024-08-15",
+        endDate: "2024-09-08",
+        days: {},
+        stats: {
+          fortes: 4,
+          minimos: 5,
+          perdidos: 16,
+          registrados: 25,
+          consistencia: 0.36,
+          streak: 2,
+          diasDecorridos: 25,
+        },
+        archivedAt: new Date().toISOString(),
+      },
+      {
+        id: `cycle-demo-4-${Date.now() + 3}`,
+        name: "Ciclo de teste — Abandonado",
+        startDate: "2024-05-02",
+        endDate: "2024-05-10",
+        days: {},
+        stats: {
+          fortes: 1,
+          minimos: 2,
+          perdidos: 6,
+          registrados: 9,
+          consistencia: 0.33,
+          streak: 0,
+          diasDecorridos: 9,
+        },
+        archivedAt: new Date().toISOString(),
+      },
+    ];
+    const next = [...samples, ...loadArchive()];
+    saveArchive(next);
+    setArchive(next);
+  }, []);
+
   const updateDay = useCallback((dayNumber: number, patch: Partial<DayRecord>) => {
     setState((prev) => {
       if (!prev) return prev;
@@ -123,6 +199,7 @@ export function useProtocol() {
     reset,
     archiveCurrent,
     removeArchived,
+    seedDemoArchive,
     updateDay,
     dayNumber,
     inRange,
