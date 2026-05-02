@@ -7,7 +7,7 @@ import { useProtocol } from "@/hooks/useProtocol";
 import { classifyDay, emptyDay, PROTOCOL_LENGTH } from "@/lib/protocol";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { CheckCircle2, Bell, DollarSign, Dumbbell, Brain, Zap, Moon, XCircle, Circle, Pencil, type LucideIcon } from "lucide-react";
+import { CheckCircle2, Bell, DollarSign, Dumbbell, Brain, Zap, Moon, XCircle, Circle, Check, type LucideIcon } from "lucide-react";
 
 const CLASS_LABEL: Record<string, { label: string; className: string; Icon: LucideIcon }> = {
   forte: { label: "Dia Forte", className: "text-[hsl(var(--success))]", Icon: Zap },
@@ -92,13 +92,13 @@ export function DailyCheckIn() {
 
   const CONFIRMED_MESSAGES: Record<string, { title: string; subtitle: string; tone: string }> = {
     forte: {
-      title: "Dia Forte conquistado.",
-      subtitle: "Produção, corpo e mente alinhados. É assim que se constrói.",
+      title: "Dia forte conquistado!",
+      subtitle: "Você está construindo a sua melhor versão, um dia de cada vez.",
       tone: "text-[hsl(var(--success))]",
     },
     minimo: {
-      title: "Dia Mínimo cumprido.",
-      subtitle: "Você manteve a corrente. Amanhã, eleve o nível.",
+      title: "Dia mínimo cumprido.",
+      subtitle: "A corrente continua intacta. Amanhã, eleve o nível.",
       tone: "text-accent",
     },
     perdido: {
@@ -144,34 +144,69 @@ export function DailyCheckIn() {
       <div className="border-t border-border" />
 
       {confirmed ? (
-        <div className="py-8 text-center space-y-5 animate-fade-in">
-          <div
+        <div className="py-6 text-center space-y-6 animate-fade-in">
+          {/* Ícone com glow */}
+          <div className="relative mx-auto w-24 h-24 flex items-center justify-center">
+            <div
+              className={cn(
+                "absolute inset-0 rounded-full blur-2xl opacity-60",
+                finalStatus === "forte" && "bg-[hsl(var(--success))]",
+                finalStatus === "minimo" && "bg-accent",
+                finalStatus === "perdido" && "bg-destructive",
+              )}
+            />
+            <div
+              className={cn(
+                "relative h-20 w-20 rounded-full border-2 flex items-center justify-center bg-background/80 backdrop-blur-sm",
+                finalStatus === "forte" && "border-[hsl(var(--success))] shadow-[0_0_30px_hsl(var(--success)/0.5)]",
+                finalStatus === "minimo" && "border-accent shadow-[0_0_30px_hsl(var(--accent)/0.5)]",
+                finalStatus === "perdido" && "border-destructive shadow-[0_0_30px_hsl(var(--destructive)/0.5)]",
+              )}
+            >
+              {finalStatus === "perdido" ? (
+                <XCircle className={cn("h-10 w-10", finalMsg.tone)} strokeWidth={2.5} />
+              ) : (
+                <Check className={cn("h-10 w-10", finalMsg.tone)} strokeWidth={3} />
+              )}
+            </div>
+          </div>
+
+          {/* Eyebrow */}
+          <p
             className={cn(
-              "mx-auto h-20 w-20 rounded-full flex items-center justify-center",
-              finalStatus === "forte" && "bg-[hsl(var(--success)/0.15)]",
-              finalStatus === "minimo" && "bg-[hsl(var(--accent)/0.15)]",
-              finalStatus === "perdido" && "bg-[hsl(0_75%_45%/0.15)]",
+              "text-xs font-extrabold uppercase tracking-[0.25em]",
+              finalMsg.tone,
             )}
           >
-            <FinalIcon className={cn("h-10 w-10", finalMsg.tone)} strokeWidth={2.25} />
-          </div>
+            Dia {dayNumber} {finalStatus === "perdido" ? "encerrado" : "concluído"}
+          </p>
+
+          {/* Título + subtítulo */}
           <div className="space-y-2">
-            <h3 className={cn("text-display text-2xl font-bold", finalMsg.tone)}>
+            <h3 className="text-display text-3xl sm:text-4xl font-bold leading-tight">
               {finalMsg.title}
             </h3>
-            <p className="text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
+            <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
               {finalMsg.subtitle}
             </p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
+
+          {/* Citação do lembrete */}
+          <div className="mx-auto max-w-md bg-muted/30 border border-border rounded-lg px-5 py-4">
+            <p className="text-sm text-muted-foreground italic leading-relaxed">
+              <span className="text-[hsl(var(--success))] mr-1 not-italic">“</span>
+              O que você faz todos os dias, define quem você se torna.
+              <span className="text-[hsl(var(--success))] ml-1 not-italic">”</span>
+            </p>
+          </div>
+
+          {/* Link discreto */}
+          <button
             onClick={() => setConfirmed(false)}
-            className="mt-2"
+            className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
           >
-            <Pencil className="h-3.5 w-3.5 mr-2" />
             Editar dia
-          </Button>
+          </button>
         </div>
       ) : (
         <>
